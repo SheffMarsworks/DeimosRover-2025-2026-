@@ -1,2 +1,23 @@
 # DeimosRover-2025-2026-
 Software Team GitHub for navigation
+# Project Marsworks: Deimost Mars Rover
+ROS2 workspace developed to achieve manual control and autonomous navigation in both simulation and real-world environments for the [Anatolian Rover Challenge (ARC) 2026](https://www.anatolianrover.space/) and [European Rover Challenge (ERC) 2026](https://roverchallenge.eu/)
+## Anatolian Rover Challenge (ARC)
+### Main Components 
+- Rover Simulation (Gazebo)
+- Rover Teleoperation (MAVROS)
+- Rover Autonomous Navigation (RTAB + NAV2)
+### Prerequisites
+- ROS2 (Humble or later recommended)
+- Ubuntu 22.04 Jammy Jellyfish
+- Gazebo Ignition
+
+## European Rover Challenge (ERC)
+### Main Components 
+- Rover Simulation (Gazebo)
+- Rover Teleoperation (MAVROS)
+- Rover Autonomous Navigation (RTAB + NAV2)
+### Prerequisites
+- ROS2 (Humble or later recommended)
+- Ubuntu 22.04 Jammy Jellyfish
+- Gazebo Ignition
