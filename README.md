@@ -36,5 +36,6 @@ TBC
 
 ## Contributors 
 <a href="https://github.com/SheffMarsworks/DeimosRover-2025-2026-/graphs/contributors">
-  <img src="https://sheffmarsworks.github.io/DeimosRover-2025-2026-/CONTRIBUTORS.svg" />
+  <img src="https://contrib.rocks/image?repo=SheffMarsworks/DeimosRover-2025-2026-"/>
 </a>
+
