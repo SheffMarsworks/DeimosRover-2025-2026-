@@ -35,3 +35,6 @@ TBC
 - [@Renzo Damian](https://github.com/renzodamgo) the 2024–2025 MarsWorks Software Team Lead, for providing last year’s framework, which served as the foundation for our current system [Scarab Rover](https://github.com/SheffMarsworks/ScarabRover?tab=readme-ov-file)
 
 ## Contributors 
+<a href="https://github.com/SheffMarsworks/DeimosRover-2025-2026-/graphs/contributors">
+  <img src="https://sheffmarsworks.github.io/DeimosRover-2025-2026-/CONTRIBUTORS.svg" />
+</a>
