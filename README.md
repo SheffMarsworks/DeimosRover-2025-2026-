@@ -30,9 +30,9 @@ TBC
 ```
 ## Documentation
 ## Acknowledgments
-- [Project Marsworks Software Team](https://marsworks.sites.sheffield.ac.uk/team#h.4kuzgvqqcu52)
-- [@Jan](https://github.com/JanUniAccount) for providing the [original Mars rover simulation URDF](https://github.com/JanUniAccount/mars_rover_pkg) in ROS1
-- [@Renzo Damian](https://github.com/renzodamgo) the 2024–2025 MarsWorks Software Team Lead, for providing last year’s framework, which served as the foundation for our current system [Scarab Rover](https://github.com/SheffMarsworks/ScarabRover?tab=readme-ov-file)
+- [Project Marsworks Software Team](https://marsworks.sites.sheffield.ac.uk/team#h.4kuzgvqqcu52).
+- [@Jan](https://github.com/JanUniAccount) for providing the [original Mars rover simulation URDF](https://github.com/JanUniAccount/mars_rover_pkg) in ROS1.
+- [@Renzo Damian](https://github.com/renzodamgo) the 2024–2025 MarsWorks Software Team Lead, for providing last year’s framework, [Scarab Rover](https://github.com/SheffMarsworks/ScarabRover?tab=readme-ov-file), which served as the foundation for our current system.
 
 ## Contributors 
 <a href="https://github.com/SheffMarsworks/DeimosRover-2025-2026-/graphs/contributors">
