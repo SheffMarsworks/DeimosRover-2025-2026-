@@ -120,12 +120,12 @@ def generate_launch_description():
             ),
             SetEnvironmentVariable(
                 name="GAZEBO_MODEL_PATH",
-                value="/home/damian/marsworks_scarab_ws/src/rover_description/models:"
+                value=os.path.join(rover_description, "other_models")
                 + os.environ.get("GAZEBO_MODEL_PATH", ""),
             ),
             SetEnvironmentVariable(
                 name="IGN_GAZEBO_RESOURCE_PATH",
-                value="/home/damian/marsworks_scarab_ws/src/rover_description/models",
+                value=os.path.join(rover_description, "other_models"),
             ),
             simu_time,
             qt_qpa_platform,
