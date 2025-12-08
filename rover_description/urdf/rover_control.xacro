@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<robot name="scarab"
+    xmlns:xacro="http://ros.org/wiki/xacro">
+
+
+    <ros2_control name="GazeboSystem" type="system">
+        <xacro:if value="$(arg is_ignition)">
+            <hardware>
+                <plugin>ign_ros2_control/IgnitionSystem</plugin>
+            </hardware>
+        </xacro:if>
+
+        <!-- ROS 2 Iron or above -->
+        <xacro:unless value="$(arg is_ignition)">
+            <hardware>
+                <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+            </hardware>
+        </xacro:unless>
+
+        <joint name="susLeft_joint_b">
+            <state_interface name="position" />
+        </joint>
+
+        <joint name="susRight_joint_b">
+            <state_interface name="position" />
+        </joint>
+
+        <joint name="wheel1_joint">
+            <command_interface name="velocity">
+                <param name="min">-0.7</param>
+                <param name="max">0.7</param>
+            </command_interface>
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
+
+        <joint name="wheel2_joint">
+            <command_interface name="velocity">
+                <param name="min">-0.7</param>
+                <param name="max">0.7</param>
+            </command_interface>
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
+
+        <joint name="wheel3_joint">
+            <command_interface name="velocity">
+                <param name="min">-0.7</param>
+                <param name="max">0.7</param>
+            </command_interface>
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
+
+        <joint name="wheel4_joint">
+            <command_interface name="velocity">
+                <param name="min">-0.7</param>
+                <param name="max">0.7</param>
+            </command_interface>
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
+
+        <joint name="wheel5_joint">
+            <command_interface name="velocity">
+                <param name="min">-0.7</param>
+                <param name="max">0.7</param>
+            </command_interface>
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
+
+        <joint name="wheel6_joint">
+            <command_interface name="velocity">
+                <param name="min">-0.7</param>
+                <param name="max">0.7</param>
+            </command_interface>
+            <state_interface name="position" />
+            <state_interface name="velocity" />
+        </joint>
+
+
+    </ros2_control>
+</robot>
