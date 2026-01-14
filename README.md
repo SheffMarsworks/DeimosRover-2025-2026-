@@ -16,7 +16,7 @@ This ROS 2 workspace provides manual control and autonomous navigation capabilit
 ## Installation
 1. Clone the repository:
 ```bash
-https://github.com/SheffMarsworks/DeimosRover-2025-2026-.git
+git clone https://github.com/SheffMarsworks/DeimosRover-2025-2026-.git
 
 cd DeimosRover-2025-2026-
 ```
