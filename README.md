@@ -21,12 +21,13 @@ git clone https://github.com/SheffMarsworks/DeimosRover-2025-2026-.git
 cd DeimosRover-2025-2026-
 ```
 2. Install dependencies:
-```
-TBC
+   Run the command below after cloning the repo.
+```bash
+rosdep install --from-paths src --ignore-src -r -y
 ```
 3. Build the workspace
-```
-TBC
+```bash
+colcon build && source install/setup.bash
 ```
 ## Documentation
 ## Acknowledgments
