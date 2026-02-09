@@ -9,7 +9,7 @@ This ROS 2 workspace provides manual control and autonomous navigation capabilit
 - Rover Autonomous Navigation (RTAB + NAV2)
 
 ### Prerequisites
-- ROS2 (Humble)
+- ROS2 (Jazzy)
 - Ubuntu 22.04 Jammy Jellyfish
 - [Gazebo Fortress](https://gazebosim.org/docs/fortress/install_ubuntu/)
 
