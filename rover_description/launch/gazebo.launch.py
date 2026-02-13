@@ -42,7 +42,7 @@ def generate_launch_description():
     )
 
     ros_distro = os.environ["ROS_DISTRO"]
-    is_ignition = "True" if ros_distro == "humble" else "False"
+    is_ignition = "True" if ros_distro == "jazzy" else "False" #changed to jazzy
 
     robot_description = ParameterValue(
         Command(
@@ -113,27 +113,60 @@ def generate_launch_description():
     # Define the path to your 'model' folder
     model_path = os.path.join(rover_description, "model")
 
+    # return LaunchDescription(
+    #     [
+    #         # This tells Gazebo to look INSIDE the 'model' folder for gale_crater_patch2
+    #         SetEnvironmentVariable(
+    #             name="GZ_SIM_RESOURCE_PATH",
+    #             value=[
+    #                 model_path,
+    #                 ":",
+    #                 os.environ.get("GZ_SIM_RESOURCE_PATH", "")
+    #             ],
+    #         ),
+    #         # Keep this for compatibility with Ignition-based versions
+    #         SetEnvironmentVariable(
+    #             name="IGN_GAZEBO_RESOURCE_PATH",
+    #             value=[
+    #                 model_path,
+    #                 ":",
+    #                 os.environ.get("IGN_GAZEBO_RESOURCE_PATH", "")
+    #             ],
+    #         ),
+    #         # Use the platform variable you defined earlier
+    #         qt_qpa_platform,
+    #         simu_time,
+    #         model_arg,
+    #         robot_state_publisher_node,
+    #         gazebo,
+    #         gz_spawn_entity,
+    #         gz_ros2_bridge,
+    #         imu_filter,
+    #     ]
+    # )
+
     return LaunchDescription(
         [
-            # This tells Gazebo to look INSIDE the 'model' folder for gale_crater_patch2
             SetEnvironmentVariable(
                 name="GZ_SIM_RESOURCE_PATH",
                 value=[
-                    model_path,
+                    str(Path(rover_description).parent.resolve()),  # for package://rover_description/meshes
+                    ":",
+                    model_path,                                      # for model://gale_crater_patch2
                     ":",
                     os.environ.get("GZ_SIM_RESOURCE_PATH", "")
                 ],
             ),
-            # Keep this for compatibility with Ignition-based versions
             SetEnvironmentVariable(
                 name="IGN_GAZEBO_RESOURCE_PATH",
                 value=[
+                    str(Path(rover_description).parent.resolve()),
+                    ":",
                     model_path,
                     ":",
                     os.environ.get("IGN_GAZEBO_RESOURCE_PATH", "")
                 ],
             ),
-            # Use the platform variable you defined earlier
             qt_qpa_platform,
             simu_time,
             model_arg,
