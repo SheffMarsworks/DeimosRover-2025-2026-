@@ -72,7 +72,7 @@
     <fdir1>1 0 0</fdir1>
   </gazebo>
 
-  <!-- <gazebo>
+  <gazebo>
     <!-- ROS 2 Humble -->
     <xacro:if value="$(arg is_ignition)">
       <plugin filename="ign_ros2_control-system" name="ign_ros2_control::IgnitionROS2ControlPlugin">
@@ -86,5 +86,5 @@
         <parameters>$(find rover_controller)/config/controller.yaml</parameters>
       </plugin>
     </xacro:unless>
-  </gazebo> -->
+  </gazebo>
 </robot>
