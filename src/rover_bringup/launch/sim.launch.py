@@ -8,13 +8,13 @@ from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 
 
-def launch_setup(context, *args, **kwargs):
+def launch_setup(launch_context, *args, **kwargs):
     # Launch configs
-    world_name = LaunchConfiguration("world").perform(context)
-    name = LaunchConfiguration("name").perform(context)
-    x = LaunchConfiguration("x").perform(context)
-    y = LaunchConfiguration("y").perform(context)
-    z = LaunchConfiguration("z").perform(context)
+    world_name = LaunchConfiguration("world").perform(launch_context)
+    name = LaunchConfiguration("name").perform(launch_context)
+    x = LaunchConfiguration("x").perform(launch_context)
+    y = LaunchConfiguration("y").perform(launch_context)
+    z = LaunchConfiguration("z").perform(launch_context)
 
     # Map world name to world file
     world_dict = {
@@ -30,7 +30,7 @@ def launch_setup(context, *args, **kwargs):
         )
     
     # Paths
-    desc_share = FindPackageShare("rover_description").perform(context)
+    desc_share = FindPackageShare("rover_description").perform(launch_context)
     world_path = os.path.join(desc_share, "worlds", world_dict[world_name])
     xacro_path = os.path.join(desc_share, "urdf", "rover.urdf.xacro")
 
