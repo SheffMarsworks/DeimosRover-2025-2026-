@@ -1,0 +1,3 @@
+Visualize robot in Rviz
+ros2 launch rover_description rviz.launch.py
+
