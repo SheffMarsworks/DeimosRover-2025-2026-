@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <sdf version="1.9">
   <model name='gale_crater_patch2'>
-    <pose frame=''>0 0 0 0 0 0</pose>
+    <pose>0 0 0 0 0 0</pose>
     <static>1</static>
     <link name='link'>
       <collision name='collision'>
@@ -19,11 +19,15 @@
           </mesh>
         </geometry>
         <material>
-          <pbr>
+        <!-- I (Euro) cant see the texture so this is a quick fix-->
+          <ambient>0.8 0.4 0.2 1</ambient>
+          <diffuse>0.8 0.4 0.2 1</diffuse>
+          <!-- Enable this if you can see the texture -->
+          <!-- <pbr>
             <metal>
               <albedo_map>model://gale_crater_patch2/materials/textures/sand_pebbles.png</albedo_map>
             </metal>
-          </pbr>
+          </pbr> -->
           <diffuse>1 1 1 1</diffuse>
         </material>
       </visual>

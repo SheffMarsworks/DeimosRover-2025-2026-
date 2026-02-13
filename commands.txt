@@ -1,3 +1,9 @@
+Init
+cd code/marswork/DeimosRover-2025-2026-/
+. install/setup.bash
+
 Visualize robot in Rviz
 ros2 launch rover_description rviz.launch.py
 
+Open marsworld in Gazebo
+ign gazebo -r $(ros2 pkg prefix rover_description)/share/rover_description/worlds/mars.world.sdf

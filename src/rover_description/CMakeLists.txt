@@ -5,9 +5,15 @@ project(rover_description)
 find_package(ament_cmake REQUIRED)
 find_package(urdf REQUIRED)
 
+# Install resource folders
 install(
-  DIRECTORY launch meshes urdf rviz worlds other_models
+  DIRECTORY launch meshes models rviz urdf worlds
   DESTINATION share/${PROJECT_NAME}
+)
+
+# Environment hook
+ament_environment_hooks(
+  "${CMAKE_CURRENT_SOURCE_DIR}/env-hooks/rover_description.dsv"
 )
 
 if(BUILD_TESTING)
