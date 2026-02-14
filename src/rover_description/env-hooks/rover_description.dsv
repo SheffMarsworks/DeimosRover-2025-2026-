@@ -1,2 +1,8 @@
+# Rover description
 prepend-non-duplicate;IGN_GAZEBO_RESOURCE_PATH;share
+
+# Mars world
+prepend-non-duplicate;IGN_GAZEBO_RESOURCE_PATH;share/rover_description/models
+
+# Plugins
 prepend-non-duplicate;IGN_GAZEBO_SYSTEM_PLUGIN_PATH;/opt/ros/humble/lib

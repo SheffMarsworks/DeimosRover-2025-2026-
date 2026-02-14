@@ -29,7 +29,7 @@ Teleop
     dummy command
         ros2 topic pub -r 30 /rover_controller/cmd_vel geometry_msgs/msg/TwistStamped \
         "{header: {frame_id: 'base_link'}, twist: {linear: {x: 0.3}, angular: {z: 0.4}}}"
-    
+
     ros2 launch rover_controller keyboard_teleop.launch.py
     ros2 run teleop_twist_keyboard teleop_twist_keyboard
 
@@ -45,7 +45,4 @@ ros2 launch rover_bringup simulation.launch.py \
     teleop:=keyboard \
     world:=mars
 
-
-
 colcon clean workspace -y && colcon build --symlink-install && . install/setup.bash
-

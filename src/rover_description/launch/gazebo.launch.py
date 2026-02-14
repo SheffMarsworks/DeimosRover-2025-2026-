@@ -18,12 +18,6 @@ def launch_setup(launch_context, *args, **kwargs):
     y = LaunchConfiguration("y").perform(launch_context)
     z = LaunchConfiguration("z").perform(launch_context)
 
-    # Environment variables
-    gazebo_resource = SetEnvironmentVariable(
-        name="IGN_GAZEBO_RESOURCE_PATH",
-        value=[str(Path(get_package_share_directory("rover_description")).parent.resolve())],
-    )
-
     # Map world name to world file
     world_dict = {
         "empty": "empty.sdf",
@@ -116,7 +110,6 @@ def launch_setup(launch_context, *args, **kwargs):
     return [
         simu_time,
         gazebo,
-        gazebo_resource,
         robot_state_publisher,
         spawn_trigger,
         gz_ros2_bridge,
@@ -126,41 +119,33 @@ def launch_setup(launch_context, *args, **kwargs):
 
 def generate_launch_description():
 
-    world = DeclareLaunchArgument(
-            name = "world",
-            default_value="empty",
-            description="World shortcut: empty | mars | warehouse",
-            )
-    
-    name = DeclareLaunchArgument(
-            name = "name",
-            default_value="rover",
-            description="Entity name in Gazebo",
-        )
-    
-    x = DeclareLaunchArgument(
-            name = "x",
-            default_value="0.0",
-            description="Initial X position of the robot",
-        )
-    
-    y = DeclareLaunchArgument(
-            name = "y",
-            default_value="0.0",
-            description="Initial Y position of the robot",
-        )
-
-    z = DeclareLaunchArgument(
-            name = "z",
-            default_value="0.3",
-            description="Initial Z position of the robot",
-        )
-
     return LaunchDescription(
         [
-            world,
-            name,
-            x, y, z,
+            DeclareLaunchArgument(
+                name = "world",
+                default_value="empty",
+                description="World shortcut: empty | mars | warehouse",
+                ),
+            DeclareLaunchArgument(
+                name = "name",
+                default_value="rover",
+                description="Entity name in Gazebo",
+                ),
+            DeclareLaunchArgument(
+                name = "x",
+                default_value="0.0",
+                description="Initial X position of the robot",
+                ),
+            DeclareLaunchArgument(
+                name = "y",
+                default_value="0.0",
+                description="Initial Y position of the robot",
+                ),
+            DeclareLaunchArgument(
+                name = "z",
+                default_value="0.3",
+                description="Initial Z position of the robot",
+                ),
             OpaqueFunction(function=launch_setup),
         ]
     )
