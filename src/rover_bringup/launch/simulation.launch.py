@@ -11,12 +11,15 @@ from launch_ros.actions import Node
 
 
 def generate_launch_description():
+
+    # Argument for teleop
     teleop_arg = DeclareLaunchArgument(
         "teleop",
         default_value="none",
         description="Teleop type: keyboard, joystick, none",
     )
 
+    # Argument for controller manager
     controller_manager_arg = DeclareLaunchArgument(
         "controller_manager",
         default_value="/controller_manager",
@@ -24,10 +27,12 @@ def generate_launch_description():
     )
 
     def launch_setup(context, *args, **kwargs):
+
+        # Launch configs
         teleop = LaunchConfiguration("teleop").perform(context)
         controller_manager = LaunchConfiguration("controller_manager").perform(context)
 
-        # 1) Gazebo + spawn robot (from rover_description)
+        # Gazebo + spawn robot
         gazebo_launch = IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(
@@ -38,9 +43,7 @@ def generate_launch_description():
             )
         )
 
-        # 2) Spawn rover_controller via controller_manager spawner
-        # Equivalent to:
-        # ros2 run controller_manager spawner rover_controller --controller-manager /controller_manager
+        # Controller manager
         spawn_rover_controller = Node(
             package="controller_manager",
             executable="spawner",
@@ -50,7 +53,7 @@ def generate_launch_description():
 
         actions = [gazebo_launch, spawn_rover_controller]
 
-        # 3) Optional teleop
+        # Teleop
         if teleop == "keyboard":
             teleop_launch = IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
@@ -75,7 +78,7 @@ def generate_launch_description():
             )
             actions.append(teleop_launch)
 
-        # else: teleop == "none" (do nothing)
+        # else: teleop == "none"
 
         return actions
 

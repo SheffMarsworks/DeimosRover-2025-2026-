@@ -18,7 +18,7 @@ def generate_launch_description():
         output="screen",
         # WSL
         prefix="xterm -e",
-        # # Dualboot
+        # Dualboot
         # prefix="gnome-terminal -- bash -c",
         parameters=[
             {"use_sim_time": LaunchConfiguration("use_sim_time")},
