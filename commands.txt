@@ -7,4 +7,45 @@ Visualize robot in Rviz
     ros2 launch rover_description rviz.launch.py
 
 Open marsworld in Gazebo
-ign gazebo -r $(ros2 pkg prefix rover_description)/share/rover_description/worlds/mars.world.sdf
+    ign gazebo -r $(ros2 pkg prefix rover_description)/share/rover_description/worlds/mars.world.sdf
+
+Spawn rover in Gazebo
+    ros2 launch rover_description gazebo.launch.py
+    Argument
+        world
+            ros2 launch rover_description gazebo.launch.py world:=empty
+            ros2 launch rover_description gazebo.launch.py world:=warehouse
+            ros2 launch rover_description gazebo.launch.py world:=mars
+        x | y | z
+            ros2 launch rover_description gazebo.launch.py x:= 5.0 y:=5.0 z:=0.35
+
+Teleop
+    sudo apt install ros-humble-ros2controlcli ros-humble-controller-manager ros-humble-ros2-controllers
+
+    open gazebo
+        ros2 launch rover_description gazebo.launch.py
+    load controller
+        ros2 run controller_manager spawner rover_controller --controller-manager /controller_manager
+    dummy command
+        ros2 topic pub -r 30 /rover_controller/cmd_vel geometry_msgs/msg/TwistStamped \
+        "{header: {frame_id: 'base_link'}, twist: {linear: {x: 0.3}, angular: {z: 0.4}}}"
+    
+    ros2 launch rover_controller keyboard_teleop.launch.py
+    ros2 run teleop_twist_keyboard teleop_twist_keyboard
+
+ros2 launch rover_bringup simulation.launch.py \
+    teleop:=keyboard \
+    world:=empty
+
+ros2 launch rover_bringup simulation.launch.py \
+    teleop:=keyboard \
+    world:=warehouse
+
+ros2 launch rover_bringup simulation.launch.py \
+    teleop:=keyboard \
+    world:=mars
+
+
+
+colcon clean workspace -y && colcon build --symlink-install && . install/setup.bash
+
