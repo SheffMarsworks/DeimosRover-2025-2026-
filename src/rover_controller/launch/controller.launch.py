@@ -23,6 +23,8 @@ def generate_launch_description():
         arguments=[
             "rover_controller",
             "--controller-manager", "/controller_manager",
+            "--controller-manager-timeout", "120",
+            "--switch-timeout", "120",
             ],
     )
 
