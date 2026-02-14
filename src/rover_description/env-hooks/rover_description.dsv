@@ -1,1 +1,2 @@
 prepend-non-duplicate;IGN_GAZEBO_RESOURCE_PATH;share
+prepend-non-duplicate;IGN_GAZEBO_SYSTEM_PLUGIN_PATH;/opt/ros/humble/lib

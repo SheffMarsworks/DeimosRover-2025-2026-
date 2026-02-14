@@ -1,90 +1,93 @@
 import os
 from pathlib import Path
+
 from ament_index_python.packages import get_package_share_directory
-
 from launch import LaunchDescription
-from launch.actions import (
-    DeclareLaunchArgument,
-    IncludeLaunchDescription,
-    SetEnvironmentVariable,
-)
+from launch.actions import DeclareLaunchArgument, ExecuteProcess, OpaqueFunction, RegisterEventHandler, SetEnvironmentVariable
+from launch.event_handlers import OnProcessStart
 from launch.substitutions import Command, LaunchConfiguration
-from launch.launch_description_sources import PythonLaunchDescriptionSource
-
 from launch_ros.actions import Node
-from launch_ros.parameter_descriptions import ParameterValue
-
-world_file = "mars.world.sdf"  # mars world
-# world_file = "empty.sdf"  # empty world
-# world_file = "warehouse.sdf"  # warehouse world
+from launch_ros.substitutions import FindPackageShare
 
 
-def generate_launch_description():
-    rover_description = get_package_share_directory("rover_description")
-    # world_file = os.path.join(rover_description, "worlds", "wro_world.sdf")
+def launch_setup(launch_context, *args, **kwargs):
+    # Launch configs
+    world_name = LaunchConfiguration("world").perform(launch_context)
+    name = LaunchConfiguration("name").perform(launch_context)
+    x = LaunchConfiguration("x").perform(launch_context)
+    y = LaunchConfiguration("y").perform(launch_context)
+    z = LaunchConfiguration("z").perform(launch_context)
 
-    model_arg = DeclareLaunchArgument(
-        name="model",
-        default_value=os.path.join(rover_description, "urdf", "rover.urdf.xacro"),
-        description="Absolute path to robot urdf file",
+    # Environment variables
+    gazebo_resource = SetEnvironmentVariable(
+        name="IGN_GAZEBO_RESOURCE_PATH",
+        value=[str(Path(get_package_share_directory("rover_description")).parent.resolve())],
+    )
+
+    # Map world name to world file
+    world_dict = {
+        "empty": "empty.sdf",
+        "mars": "mars.world.sdf",
+        "warehouse": "warehouse.sdf",
+    }
+
+    # Throw error if invalid world name
+    if world_name not in world_dict:
+        raise RuntimeError(
+            f"Invalid world='{world_name}'. Valid: {list(world_dict.keys())}"
+        )
+    
+    # Paths
+    desc_pkg_path = FindPackageShare("rover_description").perform(launch_context)
+    world_path = os.path.join(desc_pkg_path, "worlds", world_dict[world_name])
+    xacro_path = os.path.join(desc_pkg_path, "urdf", "rover.urdf.xacro")
+
+    # Xacro to URDF
+    robot_description = Command(["xacro ", xacro_path])
+
+    # Start Gazebo
+    gazebo = ExecuteProcess(
+        cmd=["ign", "gazebo", "-r", world_path],
+        output="screen",
+    )
+
+    # Robot State Publisher Node
+    robot_state_publisher = Node(
+        package="robot_state_publisher",
+        executable="robot_state_publisher",
+        parameters=[
+            {"robot_description": robot_description},
+            {"use_sim_time": True},
+        ],
+        output="screen",
+    )
+
+    # Spawn Robot Node
+    spawn_robot = Node(
+        package="ros_gz_sim",
+        executable="create",
+        arguments=[
+            "-topic", "robot_description",
+            "-name", name,
+            "-x", x,
+            "-y", y,
+            "-z", z,
+        ],
+        output="screen",
+    )
+
+    # Spawn robot after Gazebo starts
+    spawn_trigger = RegisterEventHandler(
+        OnProcessStart(
+            target_action=gazebo,
+            on_start=[spawn_robot],
+        )
     )
 
     simu_time = DeclareLaunchArgument(
         "use_sim_time",
         default_value="True",
         description="Use simulation (Gazebo) clock if true",
-    )
-    qt_qpa_platform = SetEnvironmentVariable(name="QT_QPA_PLATFORM", value="xcb")
-
-    gazebo_resource_path = SetEnvironmentVariable(
-        name="GZ_SIM_RESOURCE_PATH",
-        value=[str(Path(rover_description).parent.resolve())],
-    )
-
-    ros_distro = os.environ["ROS_DISTRO"]
-    is_ignition = "True" if ros_distro == "humble" else "False"
-
-    robot_description = ParameterValue(
-        Command(
-            ["xacro ", LaunchConfiguration("model"), " is_ignition:=", is_ignition]
-        ),
-        value_type=str,
-    )
-
-    robot_state_publisher_node = Node(
-        package="robot_state_publisher",
-        executable="robot_state_publisher",
-        parameters=[{"robot_description": robot_description, "use_sim_time": True}],
-    )
-
-    gazebo = IncludeLaunchDescription(
-        PythonLaunchDescriptionSource(
-            [
-                os.path.join(get_package_share_directory("ros_gz_sim"), "launch"),
-                "/gz_sim.launch.py",
-            ]
-        ),
-        launch_arguments=[
-            ("gz_args", [rover_description + "/worlds/" + world_file, " -v 4", " -r"])
-        ],
-    )
-
-    gz_spawn_entity = Node(
-        package="ros_gz_sim",
-        executable="create",
-        output="screen",
-        arguments=[
-            "-topic",
-            "robot_description",
-            "-name",
-            "scarab",
-            "-x",
-            "0.0",  # X position in meters
-            "-y",
-            "-1.0",  # Y position in meters
-            "-z",
-            "0.15",  # Z position in meters
-        ],
     )
 
     gz_ros2_bridge = Node(
@@ -110,31 +113,54 @@ def generate_launch_description():
         parameters=[{"use_mag": False, "world_frame": "enu", "publish_tf": True}],
     )
 
+    return [
+        simu_time,
+        gazebo,
+        gazebo_resource,
+        robot_state_publisher,
+        spawn_trigger,
+        gz_ros2_bridge,
+        imu_filter,
+        ]
+
+
+def generate_launch_description():
+
+    world = DeclareLaunchArgument(
+            name = "world",
+            default_value="empty",
+            description="World shortcut: empty | mars | warehouse",
+            )
+    
+    name = DeclareLaunchArgument(
+            name = "name",
+            default_value="rover",
+            description="Entity name in Gazebo",
+        )
+    
+    x = DeclareLaunchArgument(
+            name = "x",
+            default_value="0.0",
+            description="Initial X position of the robot",
+        )
+    
+    y = DeclareLaunchArgument(
+            name = "y",
+            default_value="0.0",
+            description="Initial Y position of the robot",
+        )
+
+    z = DeclareLaunchArgument(
+            name = "z",
+            default_value="0.3",
+            description="Initial Z position of the robot",
+        )
+
     return LaunchDescription(
         [
-            SetEnvironmentVariable(
-                name="GZ_SIM_RESOURCE_PATH",
-                value=os.path.join(rover_description, "models")
-                + ":"
-                + os.environ.get("GZ_SIM_RESOURCE_PATH", ""),
-            ),
-            SetEnvironmentVariable(
-                name="GAZEBO_MODEL_PATH",
-                value=os.path.join(rover_description, "other_models")
-                + os.environ.get("GAZEBO_MODEL_PATH", ""),
-            ),
-            SetEnvironmentVariable(
-                name="IGN_GAZEBO_RESOURCE_PATH",
-                value=os.path.join(rover_description, "other_models"),
-            ),
-            simu_time,
-            qt_qpa_platform,
-            model_arg,
-            gazebo_resource_path,
-            robot_state_publisher_node,
-            gazebo,
-            gz_spawn_entity,
-            gz_ros2_bridge,
-            imu_filter,
+            world,
+            name,
+            x, y, z,
+            OpaqueFunction(function=launch_setup),
         ]
     )
