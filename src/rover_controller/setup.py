@@ -13,6 +13,7 @@ setup(
             ['resource/' + package_name]),
         (os.path.join('share', package_name), ['package.xml']),
         (os.path.join('share', package_name, 'config'), glob('config/*.yaml')),
+        (os.path.join('share', package_name, 'launch'), glob('launch/*.launch.py')),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
@@ -27,6 +28,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            "rover_controller_node = rover_controller.rover_controller_node:main",
         ],
     },
 )
