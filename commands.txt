@@ -17,7 +17,7 @@ Spawn rover in Gazebo
             ros2 launch rover_description gazebo.launch.py world:=warehouse
             ros2 launch rover_description gazebo.launch.py world:=mars
         x | y | z
-            ros2 launch rover_description gazebo.launch.py x:= 5.0 y:=5.0 z:=0.35
+            ros2 launch rover_description gazebo.launch.py x:=5.0 y:=5.0 z:=0.35
 
 Teleop
     sudo apt install ros-humble-ros2controlcli ros-humble-controller-manager ros-humble-ros2-controllers
