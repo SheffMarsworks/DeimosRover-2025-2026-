@@ -28,7 +28,6 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            "rover_controller_node = rover_controller.rover_controller_node:main",
         ],
     },
 )
