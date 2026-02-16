@@ -19,7 +19,7 @@ setup(
     zip_safe=True,
     maintainer='euro',
     maintainer_email='eurondelta@gmail.com',
-    description='TODO: Package description',
+    description='ROS 2 launch files and configuration for controlling the teleoperation of the rover robot system.',
     license='MIT',
     extras_require={
         'test': [

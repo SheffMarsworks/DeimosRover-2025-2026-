@@ -3,7 +3,7 @@
 <package format="3">
   <name>rover_controller</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>ROS 2 launch files and configuration for controlling the teleoperation of the rover robot system.</description>
   <maintainer email="eurondelta@gmail.com">euro</maintainer>
   <license>MIT</license>
 
