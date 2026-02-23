@@ -51,7 +51,19 @@ def generate_launch_description():
             output="screen",
         )
 
-        actions = [gazebo_launch, spawn_rover_controller]
+        # RViz
+        rviz_launch = IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                os.path.join(
+                    get_package_share_directory("rover_description"),
+                    "launch",
+                    "rviz.launch.py",
+                )
+            ),
+            launch_arguments={"use_sim_time": "true"}.items(),
+        )
+
+        actions = [gazebo_launch, spawn_rover_controller, rviz_launch]
 
         # Teleop
         if teleop == "keyboard":

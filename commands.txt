@@ -4,7 +4,7 @@ Init
     . install/setup.bash
 
 Visualize robot in Rviz
-    ros2 launch rover_description rviz.launch.py
+    ros2 launch rover_description rviz_demo.launch.py
 
 Open marsworld in Gazebo
     ign gazebo -r $(ros2 pkg prefix rover_description)/share/rover_description/worlds/mars.world.sdf
@@ -46,3 +46,17 @@ ros2 launch rover_bringup simulation.launch.py \
     world:=mars
 
 colcon clean workspace -y && colcon build --symlink-install && . install/setup.bash
+
+Rviz
+ros2 run controller_manager spawner joint_state_broadcaster \
+  --controller-manager /controller_manager
+
+ros2 run controller_manager spawner rover_controller \
+    --controller-manager /controller_manager
+
+or
+
+ros2 launch rover_controller controller.launch.py
+SLAM
+sudo apt install ros-humble-slam-toolbox
+
