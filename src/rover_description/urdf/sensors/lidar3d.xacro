@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Mount joint -->
+  <joint name="lidar_joint" type="fixed">
+    <parent link="body_link" />
+    <child link="lidar_link" />
+    <!-- tweak xyz to where you want it on the rover -->
+    <origin xyz="0.20 0.0 0.25" rpy="0 0 0" />
+  </joint>
+
+  <!-- Physical link (simple box visual) -->
+  <link name="lidar_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.06 0.06 0.05" />
+      </geometry>
+      <material name="dark">
+        <color rgba="0.1 0.1 0.1 1.0" />
+      </material>
+    </visual>
+  </link>
+
+</robot>

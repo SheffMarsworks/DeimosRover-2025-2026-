@@ -7,6 +7,7 @@
     <xacro:include filename="$(find rover_description)/urdf/rover_gazebo.xacro" />
     <xacro:include filename="$(find rover_description)/urdf/rover_control.xacro" />
     <xacro:include filename="$(find rover_description)/urdf/sensors/realsense.xacro" />
+    <xacro:include filename="$(find rover_description)/urdf/sensors/lidar3d.xacro" />
 
 
     <link name="base_footprint"/>
