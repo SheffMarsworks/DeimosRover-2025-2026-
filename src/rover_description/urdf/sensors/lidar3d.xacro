@@ -1,25 +1,57 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <!-- Mount joint -->
   <joint name="lidar_joint" type="fixed">
     <parent link="body_link" />
     <child link="lidar_link" />
-    <!-- tweak xyz to where you want it on the rover -->
-    <origin xyz="0.20 0.0 0.25" rpy="0 0 0" />
+    <origin xyz="0.0 0.0 0.25" rpy="0 0 0" />
   </joint>
 
-  <!-- Physical link (simple box visual) -->
   <link name="lidar_link">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <box size="0.06 0.06 0.05" />
+        <box size="0.1 0.1 0.05" />
       </geometry>
       <material name="dark">
         <color rgba="0.1 0.1 0.1 1.0" />
       </material>
     </visual>
   </link>
+
+  <gazebo reference="lidar_link">
+    <sensor name="lidar3d" type="gpu_lidar">
+      <ignition_frame_id>lidar_link</ignition_frame_id>
+      <always_on>true</always_on>
+      <update_rate>10</update_rate>
+      <visualize>true</visualize>
+      <topic>/lidar</topic>
+
+      <lidar>
+        <scan>
+          <horizontal>
+            <samples>1024</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14159</min_angle>
+            <max_angle> 3.14159</max_angle>
+          </horizontal>
+
+          <!-- Vertical channels = 3D -->
+          <vertical>
+            <samples>64</samples>
+            <resolution>1</resolution>
+            <min_angle>-0.35</min_angle>
+            <max_angle> 0.35</max_angle>
+          </vertical>
+        </scan>
+
+        <range>
+          <min>0.20</min>
+          <max>50.0</max>
+          <resolution>0.01</resolution>
+        </range>
+      </lidar>
+    </sensor>
+  </gazebo>
 
 </robot>
