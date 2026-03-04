@@ -96,8 +96,7 @@ def launch_setup(launch_context, *args, **kwargs):
             "/depth_camera/camera_info@sensor_msgs/msg/CameraInfo@ignition.msgs.CameraInfo",
             "/depth_camera/image@sensor_msgs/msg/Image@ignition.msgs.Image",
             "/depth_camera/depth_image@sensor_msgs/msg/Image@ignition.msgs.Image",
-            "/lidar_points/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
-            # "/lidar_points@sensor_msgs/msg/LaserScan[gz.msgs.LaserScan",
+            "/lidar/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
         ],
         remappings=[("/depth_camera/image", "/depth_camera/image_raw")],
     )
