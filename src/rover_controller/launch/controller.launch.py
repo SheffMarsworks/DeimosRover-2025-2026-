@@ -7,7 +7,7 @@ from launch_ros.actions import Node
 def generate_launch_description():
 
     # Joint State Broadcaster
-    jsb = Node(
+    joint_state_broadcaster = Node(
         package="controller_manager",
         executable="spawner",
         arguments=[
@@ -33,16 +33,9 @@ def generate_launch_description():
             output="screen",
     )
 
-    start_rover_after_jsb = RegisterEventHandler(
-        OnProcessExit(
-            target_action=jsb,
-            on_exit=[controller],
-        )
-    )
-
     return LaunchDescription(
         [
-            jsb,
-            start_rover_after_jsb,
+            joint_state_broadcaster,
+            controller,
         ]
     )
