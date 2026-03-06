@@ -1,39 +1,23 @@
-# rover_bringup/launch/simulation.launch.py
-
 import os
 
+from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, OpaqueFunction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
-from ament_index_python.packages import get_package_share_directory
 from launch_ros.actions import Node
 
 
-def generate_launch_description():
+def launch_setup(context, *args, **kwargs):
+    mode = LaunchConfiguration("mode").perform(context)
+    teleop = LaunchConfiguration("teleop").perform(context)
+    controller_manager = LaunchConfiguration("controller_manager").perform(context)
 
-    # Argument for teleop
-    teleop_arg = DeclareLaunchArgument(
-        "teleop",
-        default_value="none",
-        description="Teleop type: keyboard, joystick, none",
-    )
+    actions = []
 
-    # Argument for controller manager
-    controller_manager_arg = DeclareLaunchArgument(
-        "controller_manager",
-        default_value="/controller_manager",
-        description="controller_manager namespace/service root",
-    )
-
-    def launch_setup(context, *args, **kwargs):
-
-        # Launch configs
-        teleop = LaunchConfiguration("teleop").perform(context)
-        controller_manager = LaunchConfiguration("controller_manager").perform(context)
-
-        # Gazebo + spawn robot
-        gazebo_launch = IncludeLaunchDescription(
+    # Gazebo + spawn robot
+    actions.append(
+        IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(
                     get_package_share_directory("rover_description"),
@@ -51,8 +35,9 @@ def generate_launch_description():
             output="screen",
         )
 
-        # RViz
-        rviz_launch = IncludeLaunchDescription(
+    # RViz
+    actions.append(
+        IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(
                     get_package_share_directory("rover_description"),
@@ -62,42 +47,64 @@ def generate_launch_description():
             ),
             launch_arguments={"use_sim_time": "true"}.items(),
         )
+    )
 
-        actions = [gazebo_launch, spawn_rover_controller, rviz_launch]
-
-        # Teleop
-        if teleop == "keyboard":
-            teleop_launch = IncludeLaunchDescription(
+    # SLAM only in slam
+    if mode == "slam":
+        actions.append(
+            IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
                     os.path.join(
-                        get_package_share_directory("rover_controller"),
+                        get_package_share_directory("rover_bringup"),
                         "launch",
-                        "keyboard_teleop.launch.py",
+                        "rtab.launch.py",
                     )
                 )
             )
-            actions.append(teleop_launch)
+        )
 
-        elif teleop == "joystick":
-            teleop_launch = IncludeLaunchDescription(
-                PythonLaunchDescriptionSource(
-                    os.path.join(
-                        get_package_share_directory("rover_controller"),
-                        "launch",
-                        "joystick_teleop.launch.py",
+    # Teleop in teleop OR slam
+    if mode in ["teleop", "slam"]:
+        teleop_map = {
+            "keyboard": "keyboard_teleop.launch.py",
+            "joystick": "joystick_teleop.launch.py",
+        }
+        teleop_file = teleop_map.get(teleop)
+
+        if teleop_file:
+            actions.append(
+                IncludeLaunchDescription(
+                    PythonLaunchDescriptionSource(
+                        os.path.join(
+                            get_package_share_directory("rover_controller"),
+                            "launch",
+                            teleop_file,
+                        )
                     )
                 )
             )
-            actions.append(teleop_launch)
 
-        # else: teleop == "none"
+    return actions
 
-        return actions
 
+def generate_launch_description():
     return LaunchDescription(
         [
-            teleop_arg,
-            controller_manager_arg,
+            DeclareLaunchArgument(
+                "teleop",
+                default_value="keyboard",
+                description="Teleop type: keyboard, joystick",
+            ),
+            DeclareLaunchArgument(
+                "controller_manager",
+                default_value="/controller_manager",
+                description="controller_manager namespace/service root",
+            ),
+            DeclareLaunchArgument(
+                "mode",
+                default_value="none",
+                description="Mode: none | teleop | slam | nav",
+            ),
             OpaqueFunction(function=launch_setup),
         ]
     )
