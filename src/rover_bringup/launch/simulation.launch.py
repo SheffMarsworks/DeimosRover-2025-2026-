@@ -11,7 +11,6 @@ from launch_ros.actions import Node
 def launch_setup(context, *args, **kwargs):
     mode = LaunchConfiguration("mode").perform(context)
     teleop = LaunchConfiguration("teleop").perform(context)
-    controller_manager = LaunchConfiguration("controller_manager").perform(context)
 
     actions = []
 
@@ -26,15 +25,22 @@ def launch_setup(context, *args, **kwargs):
                 )
             )
         )
+    )
 
-        # Controller manager
-        spawn_rover_controller = Node(
-            package="controller_manager",
-            executable="spawner",
-            arguments=["rover_controller", "--controller-manager", controller_manager],
-            output="screen",
+    # Controller
+    actions.append(
+        IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                os.path.join(
+                    get_package_share_directory("rover_controller"),
+                    "launch",
+                    "controller.launch.py",
+                )
+            ),
+            launch_arguments={"use_sim_time": "true"}.items(),
         )
-
+    )
+    
     # RViz
     actions.append(
         IncludeLaunchDescription(
@@ -94,11 +100,6 @@ def generate_launch_description():
                 "teleop",
                 default_value="keyboard",
                 description="Teleop type: keyboard, joystick",
-            ),
-            DeclareLaunchArgument(
-                "controller_manager",
-                default_value="/controller_manager",
-                description="controller_manager namespace/service root",
             ),
             DeclareLaunchArgument(
                 "mode",
