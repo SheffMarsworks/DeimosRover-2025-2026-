@@ -95,8 +95,97 @@ Nav
 (note)
 pointcloud_to_laserscan convert 3D lidar point cloud to 2D laser scan for navigation
 
+worlds:
+open world
+    ign gazebo "https://fuel.gazebosim.org/1.0/openrobotics/worlds/industrial-warehouse"
+    ign gazebo "https://fuel.gazebosim.org/1.0/openrobotics/worlds/cave world"
+Download world
+    ign fuel download -t world -u "https://fuel.gazebosim.org/1.0/openrobotics/worlds/industrial-warehouse"
+    world is saved in ~/.ignition/fuel/fuel.gazebosim.org/openrobotics/worlds/...
+    can view by tree ~/.ignition/fuel/fuel.gazebosim.org/openrobotics/worlds
+    or by explorer explorer.exe $(wslpath -w ~/.ignition/fuel/fuel.gazebosim.org/openrobotics/worlds)
 
-gazebo : https://www.youtube.com/watch?v=K4rHglJW7Hg
-
-If you want, I can also show a cleaner professional ROS2 pattern used by Nav2 robots where:
-mode:=slam | localization | navigation
+worlds
+├── openrobotics
+│   ├── jetty world
+│   ├── ionic world
+│   ├── harmonic world
+│   ├── null island
+│   ├── cave world
+│   ├── garden demo
+│   ├── prius on sonoma raceway
+│   ├── quadcopter teleop
+│   ├── tugbot in warehouse
+│   ├── industrial-warehouse
+│   ├── finals systems preliminary round 2
+│   ├── finals systems preliminary round 1
+│   ├── systems finals prize round
+│   ├── fortress demo
+│   ├── finals prize round world 08
+│   ├── finals prize round world 07
+│   ├── finals prize round world 06
+│   ├── finals prize round world 05
+│   ├── finals prize round world 04
+│   ├── finals prize round world 03
+│   ├── finals prize round world 02
+│   ├── finals prize round world 01
+│   ├── finals preliminary round world 3
+│   ├── finals preliminary round world 2
+│   ├── finals preliminary round world 1
+│   ├── urban circuit 08
+│   ├── urban circuit 07
+│   ├── urban circuit 06
+│   ├── urban circuit 05
+│   ├── urban circuit 04
+│   ├── urban circuit 03
+│   ├── urban circuit 02
+│   ├── urban circuit 01
+│   ├── urban qualification
+│   ├── urban circuit practice 03
+│   ├── urban circuit practice 02
+│   ├── urban circuit practice 01
+│   ├── urban simple 03
+│   ├── urban simple 02
+│   ├── urban simple 01
+│   ├── tunnel circuit 05
+│   ├── tunnel circuit 04
+│   ├── tunnel circuit 03
+│   ├── tunnel circuit 02
+│   ├── tunnel circuit 01
+│   ├── cave qualification
+│   ├── tunnel qualification
+│   ├── tunnel circuit practice 03
+│   ├── tunnel circuit practice 02
+│   ├── tunnel circuit practice 01
+│   ├── tunnel simple 03
+│   ├── tunnel simple 02
+│   ├── tunnel simple 01
+│   ├── niosh ex config b
+│   ├── niosh ex config a
+│   ├── niosh sr config b
+│   ├── niosh sr config a
+│   ├── virtual stix
+│   ├── cave simple 03
+│   ├── cave simple 02
+│   ├── cave simple 01
+│   ├── finals practice 03
+│   ├── finals practice 02
+│   ├── finals practice 01
+│   ├── edifice demo
+│   ├── finals qualification
+│   ├── panda joint control world
+│   ├── nao joint control
+│   ├── cave circuit practice 03
+│   ├── cave circuit 08
+│   ├── cave circuit 07
+│   ├── cave circuit 06
+│   ├── cave circuit 05
+│   ├── cave circuit 04
+│   ├── cave circuit 03
+│   ├── cave circuit 02
+│   ├── cave circuit 01
+│   ├── cave circuit practice 02
+│   ├── test_shapes
+│   ├── cave circuit practice 01
+│   ├── test world 2
+│   └── test world
