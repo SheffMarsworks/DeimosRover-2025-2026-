@@ -21,9 +21,10 @@ def launch_setup(launch_context, *args, **kwargs):
 
     # Map world name to world file
     world_dict = {
-        "empty": "empty.sdf",
-        "mars": "mars.world.sdf",
-        "warehouse": "warehouse.sdf",
+        "empty"         : "empty.sdf",
+        "mars"          : "mars.world.sdf",
+        "warehouse"     : "warehouse.sdf",
+        "industrial"    : "industrial_warehouse.sdf",
     }
 
     # Throw error if invalid world name
