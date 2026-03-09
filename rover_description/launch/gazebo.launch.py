@@ -20,12 +20,11 @@ world_file = "mars.world.sdf"  # mars world
 
 
 def generate_launch_description():
-    rover_description = get_package_share_directory("rover_description")
-    # world_file = os.path.join(rover_description, "worlds", "wro_world.sdf")
+    robot_description_pkg = get_package_share_directory("rover_description")
 
     model_arg = DeclareLaunchArgument(
         name="model",
-        default_value=os.path.join(rover_description, "urdf", "rover.urdf.xacro"),
+        default_value=os.path.join(robot_description_pkg, "urdf", "Basic_Robot.xacro"),
         description="Absolute path to robot urdf file",
     )
 
@@ -34,15 +33,11 @@ def generate_launch_description():
         default_value="True",
         description="Use simulation (Gazebo) clock if true",
     )
+
     qt_qpa_platform = SetEnvironmentVariable(name="QT_QPA_PLATFORM", value="xcb")
 
-    gazebo_resource_path = SetEnvironmentVariable(
-        name="GZ_SIM_RESOURCE_PATH",
-        value=[str(Path(rover_description).parent.resolve())],
-    )
-
     ros_distro = os.environ["ROS_DISTRO"]
-    is_ignition = "True" if ros_distro == "jazzy" else "False" #changed to jazzy
+    is_ignition = "True" if ros_distro == "jazzy" else "False"
 
     robot_description = ParameterValue(
         Command(
@@ -57,6 +52,9 @@ def generate_launch_description():
         parameters=[{"robot_description": robot_description, "use_sim_time": True}],
     )
 
+    # Define the path to the model folder (for mesh/resource resolution)
+    model_path = os.path.join(robot_description_pkg, "model")
+
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             [
@@ -65,7 +63,7 @@ def generate_launch_description():
             ]
         ),
         launch_arguments=[
-            ("gz_args", [rover_description + "/worlds/" + world_file, " -v 4", " -r"])
+            ("gz_args", [robot_description_pkg + "/worlds/" + world_file, " -v 4", " -r"])
         ],
     )
 
@@ -74,16 +72,11 @@ def generate_launch_description():
         executable="create",
         output="screen",
         arguments=[
-            "-topic",
-            "robot_description",
-            "-name",
-            "scarab",
-            "-x",
-            "0.0",  # X position in meters
-            "-y",
-            "-1.0",  # Y position in meters
-            "-z",
-            "0.15",  # Z position in meters
+            "-topic", "robot_description",
+            "-name", "Basic_Robot",
+            "-x", "0.0",   # X position in meters
+            "-y", "-1.0",  # Y position in meters
+            "-z", "0.15",  # Z position in meters
         ],
     )
 
@@ -110,61 +103,26 @@ def generate_launch_description():
         parameters=[{"use_mag": False, "world_frame": "enu", "publish_tf": True}],
     )
 
-    # Define the path to your 'model' folder
-    model_path = os.path.join(rover_description, "model")
-
-    # return LaunchDescription(
-    #     [
-    #         # This tells Gazebo to look INSIDE the 'model' folder for gale_crater_patch2
-    #         SetEnvironmentVariable(
-    #             name="GZ_SIM_RESOURCE_PATH",
-    #             value=[
-    #                 model_path,
-    #                 ":",
-    #                 os.environ.get("GZ_SIM_RESOURCE_PATH", "")
-    #             ],
-    #         ),
-    #         # Keep this for compatibility with Ignition-based versions
-    #         SetEnvironmentVariable(
-    #             name="IGN_GAZEBO_RESOURCE_PATH",
-    #             value=[
-    #                 model_path,
-    #                 ":",
-    #                 os.environ.get("IGN_GAZEBO_RESOURCE_PATH", "")
-    #             ],
-    #         ),
-    #         # Use the platform variable you defined earlier
-    #         qt_qpa_platform,
-    #         simu_time,
-    #         model_arg,
-    #         robot_state_publisher_node,
-    #         gazebo,
-    #         gz_spawn_entity,
-    #         gz_ros2_bridge,
-    #         imu_filter,
-    #     ]
-    # )
-
     return LaunchDescription(
         [
             SetEnvironmentVariable(
                 name="GZ_SIM_RESOURCE_PATH",
                 value=[
-                    str(Path(rover_description).parent.resolve()),  # for package://rover_description/meshes
+                    str(Path(robot_description_pkg).parent.resolve()),  # for package://Basic_Robot_description/meshes
                     ":",
-                    model_path,                                      # for model://gale_crater_patch2
+                    model_path,                                          # for model:// references
                     ":",
-                    os.environ.get("GZ_SIM_RESOURCE_PATH", "")
+                    os.environ.get("GZ_SIM_RESOURCE_PATH", ""),
                 ],
             ),
             SetEnvironmentVariable(
                 name="IGN_GAZEBO_RESOURCE_PATH",
                 value=[
-                    str(Path(rover_description).parent.resolve()),
+                    str(Path(robot_description_pkg).parent.resolve()),
                     ":",
                     model_path,
                     ":",
-                    os.environ.get("IGN_GAZEBO_RESOURCE_PATH", "")
+                    os.environ.get("IGN_GAZEBO_RESOURCE_PATH", ""),
                 ],
             ),
             qt_qpa_platform,
@@ -177,32 +135,3 @@ def generate_launch_description():
             imu_filter,
         ]
     )
-
-    # return LaunchDescription(
-    #     [
-    #         SetEnvironmentVariable(
-    #             name="GZ_SIM_RESOURCE_PATH",
-    #             value=os.path.join(rover_description, "models")
-    #             + ":"
-    #             + os.environ.get("GZ_SIM_RESOURCE_PATH", ""),
-    #         ),
-    #         SetEnvironmentVariable(
-    #             name="GAZEBO_MODEL_PATH",
-    #             value=os.path.join(rover_description, "other_models")
-    #             + os.environ.get("GAZEBO_MODEL_PATH", ""),
-    #         ),
-    #         SetEnvironmentVariable(
-    #             name="IGN_GAZEBO_RESOURCE_PATH",
-    #             value=os.path.join(rover_description, "other_models"),
-    #         ),
-    #         simu_time,
-    #         qt_qpa_platform,
-    #         model_arg,
-    #         gazebo_resource_path,
-    #         robot_state_publisher_node,
-    #         gazebo,
-    #         gz_spawn_entity,
-    #         gz_ros2_bridge,
-    #         imu_filter,
-    #     ]
-    # )

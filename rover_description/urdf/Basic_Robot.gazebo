@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<robot name="Basic_Robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <gazebo reference="base_link">
+    <material>
+      <ambient>0.7 0.7 0.7 1</ambient>
+      <diffuse>0.7 0.7 0.7 1</diffuse>
+      <specular>0.7 0.7 0.7 1</specular>
+    </material>
+    <selfCollide>true</selfCollide>
+    <gravity>true</gravity>
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+  </gazebo>
+
+  <gazebo reference="right_wheel_1">
+    <material>
+      <ambient>0.7 0.7 0.7 1</ambient>
+      <diffuse>0.7 0.7 0.7 1</diffuse>
+      <specular>0.7 0.7 0.7 1</specular>
+    </material>
+    <selfCollide>true</selfCollide>
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+  </gazebo>
+
+  <gazebo reference="left_wheel_1">
+    <material>
+      <ambient>0.7 0.7 0.7 1</ambient>
+      <diffuse>0.7 0.7 0.7 1</diffuse>
+      <specular>0.7 0.7 0.7 1</specular>
+    </material>
+    <selfCollide>true</selfCollide>
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+  </gazebo>
+
+  <!-- Diff drive plugin for ROS2/Gazebo Sim 8 -->
+  <gazebo>
+    <plugin filename="gz-sim-diff-drive-system"
+            name="gz::sim::systems::DiffDrive">
+      <left_joint>Rev2</left_joint>
+      <right_joint>Rev1</right_joint>
+      <wheel_separation>0.06</wheel_separation>
+      <wheel_radius>0.03</wheel_radius>
+      <odom_publish_frequency>10</odom_publish_frequency>
+      <topic>cmd_vel</topic>
+      <odom_topic>odom</odom_topic>
+      <frame_id>odom</frame_id>
+      <child_frame_id>base_link</child_frame_id>
+    </plugin>
+  </gazebo>
+
+</robot>
