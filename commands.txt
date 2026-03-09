@@ -52,8 +52,13 @@ ros2 run controller_manager spawner rover_controller \
 or
 ros2 launch rover_controller controller.launch.py
 
+.bashrc
+source /opt/ros/humble/setup.bash
+source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
+source install/setup.bash
 
 Install dependencies
+sudo apt install -y python3-colcon-clean
 sudo apt install -y ros-humble-ros2controlcli ros-humble-controller-manager ros-humble-ros2-controllers
 sudo apt install -y ros-humble-joy-teleop ros-humble-joy
 sudo apt install -y ros-humble-rtabmap-ros
