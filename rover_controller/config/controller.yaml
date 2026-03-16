@@ -1,15 +1,31 @@
-Basic_Robot_controller:
+Final_controller:
   # Publish all joint states -----------------------------------
   joint_state_controller:
     type: joint_state_controller/JointStateController
     publish_rate: 50
 
   # Position Controllers --------------------------------------
-  Rev1_position_controller:
+  Revolute 14_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev1
+    joint: Revolute 14
     pid: {p: 100.0, i: 0.01, d: 10.0}
-  Rev2_position_controller:
+  Revolute 15_position_controller:
     type: effort_controllers/JointPositionController
-    joint: Rev2
+    joint: Revolute 15
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  Revolute 16_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: Revolute 16
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  Revolute 17_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: Revolute 17
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  Revolute 18_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: Revolute 18
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  Revolute 19_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: Revolute 19
     pid: {p: 100.0, i: 0.01, d: 10.0}

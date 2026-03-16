@@ -15,17 +15,18 @@ from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 
 world_file = "mars.world.sdf"  # mars world
-# world_file = "empty.sdf"  # empty world
-# world_file = "warehouse.sdf"  # warehouse world
+# world_file = "empty.sdf"    # empty world
+# world_file = "warehouse.sdf" # warehouse world
 
 
 def generate_launch_description():
+    # Package containing the Final robot description
     robot_description_pkg = get_package_share_directory("rover_description")
 
     model_arg = DeclareLaunchArgument(
         name="model",
-        default_value=os.path.join(robot_description_pkg, "urdf", "Basic_Robot.xacro"),
-        description="Absolute path to robot urdf file",
+        default_value=os.path.join(robot_description_pkg, "urdf", "Final.xacro"),
+        description="Absolute path to robot urdf/xacro file",
     )
 
     simu_time = DeclareLaunchArgument(
@@ -52,7 +53,7 @@ def generate_launch_description():
         parameters=[{"robot_description": robot_description, "use_sim_time": True}],
     )
 
-    # Define the path to the model folder (for mesh/resource resolution)
+    # Path to model folder (for mesh/resource resolution)
     model_path = os.path.join(robot_description_pkg, "model")
 
     gazebo = IncludeLaunchDescription(
@@ -73,10 +74,10 @@ def generate_launch_description():
         output="screen",
         arguments=[
             "-topic", "robot_description",
-            "-name", "Basic_Robot",
-            "-x", "0.0",   # X position in meters
-            "-y", "-1.0",  # Y position in meters
-            "-z", "0.15",  # Z position in meters
+            "-name", "Final",
+            "-x", "0.0",   # X position in metres
+            "-y", "-1.0",  # Y position in metres
+            "-z", "0.15",  # Z position in metres
         ],
     )
 
@@ -108,7 +109,7 @@ def generate_launch_description():
             SetEnvironmentVariable(
                 name="GZ_SIM_RESOURCE_PATH",
                 value=[
-                    str(Path(robot_description_pkg).parent.resolve()),  # for package://Basic_Robot_description/meshes
+                    str(Path(robot_description_pkg).parent.resolve()),  # for package://Final_description/meshes
                     ":",
                     model_path,                                          # for model:// references
                     ":",
