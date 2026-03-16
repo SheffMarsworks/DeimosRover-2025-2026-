@@ -1,4 +1,14 @@
-Init
+Set up the project
+
+In .bashrc, add
+    source /opt/ros/humble/setup.bash
+    source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
+
+Install necessary dependencies
+    sudo apt install -y python3-colcon-clean ros-humble-xacro ros-humble-joint-state-publisher-gui ros-humble-ros-gz ros-humble-ros-gz-bridge ros-humble-ros-gz-sim ros-humble-ros-gz-interfaces ros-humble-ign-ros2-control ros-humble-twist-stamper ros-humble-imu-tools ros-humble-ros2controlcli ros-humble-controller-manager ros-humble-ros2-controllers ros-humble-joy-teleop ros-humble-joy ros-humble-rtabmap-ros
+
+    sudo apt install 
+
     cd code/marswork/DeimosRover-2025-2026-/
     colcon build --symlink-install
     . install/setup.bash
@@ -9,88 +19,31 @@ Visualize robot in Rviz
 Open marsworld in Gazebo
     ign gazebo -r $(ros2 pkg prefix rover_description)/share/rover_description/worlds/mars.world.sdf
 
-Spawn rover in Gazebo
-    ros2 launch rover_description gazebo.launch.py
-    Argument
-        world
-            ros2 launch rover_description gazebo.launch.py world:=empty
-            ros2 launch rover_description gazebo.launch.py world:=warehouse
-            ros2 launch rover_description gazebo.launch.py world:=mars
-        x | y | z
-            ros2 launch rover_description gazebo.launch.py x:=5.0 y:=5.0 z:=0.35
-
-Teleop
-    open gazebo
-        ros2 launch rover_description gazebo.launch.py
-    load controller
-        ros2 run controller_manager spawner rover_controller --controller-manager /controller_manager
-    dummy command
-        ros2 topic pub -r 30 /rover_controller/cmd_vel geometry_msgs/msg/TwistStamped \
-        "{header: {frame_id: 'base_link'}, twist: {linear: {x: 0.3}, angular: {z: 0.4}}}"
-
-    ros2 launch rover_controller keyboard_teleop.launch.py
-    ros2 run teleop_twist_keyboard teleop_twist_keyboard
-
-ros2 launch rover_bringup simulation.launch.py \
-    teleop:=keyboard \
-    world:=empty
-
-ros2 launch rover_bringup simulation.launch.py \
-    teleop:=keyboard \
-    world:=warehouse
-
-ros2 launch rover_bringup simulation.launch.py \
-    teleop:=keyboard \
-    world:=mars
-
-
-fix controller and Rviz
-ros2 run controller_manager spawner joint_state_broadcaster \
-  --controller-manager /controller_manager
-ros2 run controller_manager spawner rover_controller \
-    --controller-manager /controller_manager
-or
-ros2 launch rover_controller controller.launch.py
-
-.bashrc
-source /opt/ros/humble/setup.bash
-source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
-source install/setup.bash
-
-Install dependencies
-sudo apt install -y python3-colcon-clean
-sudo apt install -y ros-humble-ros2controlcli ros-humble-controller-manager ros-humble-ros2-controllers
-sudo apt install -y ros-humble-joy-teleop ros-humble-joy
-sudo apt install -y ros-humble-rtabmap-ros
-    (3d point clouds to 2d scan) ros-humble-slam-toolbox ros-humble-pointcloud-to-laserscan
-
 Simulation
-ros2 launch rover_bringup simulation.launch.py
-Teleop (default is keyboard)
-ros2 launch rover_bringup simulation.launch.py mode:=teleop
-ros2 launch rover_bringup simulation.launch.py mode:=teleop teleop:=joystick
-Slam
-ros2 launch rover_bringup simulation.launch.py mode:=slam
+    ros2 launch rover_bringup simulation.launch.py
+    ros2 launch rover_bringup simulation.launch.py world:=warehouse
+    ros2 launch rover_bringup simulation.launch.py world:=mars
 
-ros2 launch rover_bringup mapping_3d.launch.py
+Teleop (default is keyboard)
+    ros2 launch rover_bringup simulation.launch.py world:=warehouse mode:=teleop
+    ros2 launch rover_bringup simulation.launch.py world:=warehouse mode:=teleop teleop:=joystick
+Slam
+    ros2 launch rover_bringup simulation.launch.py world:=warehouse mode:=slam
+    ros2 launch rover_bringup simulation.launch.py world:=industrial mode:=slam Y:=1.5708 x:=1.35
 
 (may need to run if transform node died)
-ros2 run tf2_ros static_transform_publisher 0 0 0 0 0 0 odom base_footprint
+    ros2 run tf2_ros static_transform_publisher 0 0 0 0 0 0 odom base_footprint
 (may need to run if controller node died)
-ros2 launch rover_controller controller.launch.py
+    ros2 launch rover_controller controller.launch.py
 (debug transform tree)
-ros2 run tf2_tools view_frames
+    ros2 run tf2_tools view_frames
 (clean workspace and rebuild and source)
-colcon clean workspace -y && colcon build --symlink-install && . install/setup.bash
+    colcon clean workspace -y && colcon build --symlink-install && . install/setup.bash
 
-(to commit)
-feature/rviz accept multiple configuration
-fix/start controller launch instead of controller node
 (issue)
-The control is inverted.
+Robot drift when skid steering
 3d mapping is using lidar data only, not including the depth camera
-(wsl issue)
-open gnome for dualboot or xterm for wsl
+gazebo is opened using cmd, not ros node (not issue, just style)
 (to be done)
 test joystick teleop
 change rover from scarab to deimos
@@ -98,7 +51,8 @@ Add more worlds
 Nav
     ros2 launch rover_bringup simulation.launch.py mode:=nav
 (note)
-pointcloud_to_laserscan convert 3D lidar point cloud to 2D laser scan for navigation
+pointcloud_to_laserscan package convert 3D lidar point cloud to 2D laser scan for navigation
+    sudo apt install -y ros-humble-slam-toolbox ros-humble-pointcloud-to-laserscan
 
 worlds:
 open world
