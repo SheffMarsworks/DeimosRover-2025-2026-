@@ -7,7 +7,7 @@
 <link name="base_link">
   <inertial>
     <origin xyz="0.23371470080552523 0.3424215459495483 0.11792924666461195" rpy="0 0 0"/>
-    <mass value="570.3291503802121"/>
+    <mass value="36.0"/>
     <inertia ixx="28.457355" iyy="14.276737" izz="34.968035" ixy="0.085086" iyz="0.387247" ixz="-0.119086"/>
   </inertial>
   <visual>
@@ -30,7 +30,7 @@
 <link name="Wheel2_1">
   <inertial>
     <origin xyz="0.060000000000048695 9.626243984289795e-07 0.00010157518963996304" rpy="0 0 0"/>
-    <mass value="22.44587224692876"/>
+    <mass value="3.5"/>
     <inertia ixx="0.234154" iyy="0.134117" izz="0.153907" ixy="-0.0" iyz="8e-06" ixz="0.0"/>
   </inertial>
   <visual>
@@ -53,7 +53,7 @@
 <link name="Wheel1_1">
   <inertial>
     <origin xyz="0.05999999999997653 1.1249441103089453e-06 0.00010186480729457159" rpy="0 0 0"/>
-    <mass value="22.445872246928765"/>
+    <mass value="3.5"/>
     <inertia ixx="0.234154" iyy="0.134117" izz="0.153907" ixy="-0.0" iyz="8e-06" ixz="0.0"/>
   </inertial>
   <visual>
@@ -76,7 +76,7 @@
 <link name="Wheel2__1__2">
   <inertial>
     <origin xyz="-0.059999999999952314 1.1891813821787722e-06 0.00010132422446335054" rpy="0 0 0"/>
-    <mass value="22.445872246928758"/>
+    <mass value="3.5"/>
     <inertia ixx="0.234154" iyy="0.134117" izz="0.153907" ixy="0.0" iyz="8e-06" ixz="-0.0"/>
   </inertial>
   <visual>
@@ -99,7 +99,7 @@
 <link name="Wheel2__1__1">
   <inertial>
     <origin xyz="-0.7537999999999477 7.512494407269088e-05 0.00026586480728614525" rpy="0 0 0"/>
-    <mass value="22.445872246928758"/>
+    <mass value="3.5"/>
     <inertia ixx="0.234154" iyy="0.134117" izz="0.153907" ixy="0.0" iyz="8e-06" ixz="-0.0"/>
   </inertial>
   <visual>
@@ -122,7 +122,7 @@
 <link name="Side1_1">
   <inertial>
     <origin xyz="-0.04997257661493937 0.0004804691908492642 0.02785086678998311" rpy="0 0 0"/>
-    <mass value="48.074770975371656"/>
+    <mass value="5.0"/>
     <inertia ixx="3.901891" iyy="0.088961" izz="3.911318" ixy="-0.000394" iyz="0.044008" ixz="4.1e-05"/>
   </inertial>
   <visual>
@@ -145,7 +145,7 @@
 <link name="Side2_1">
   <inertial>
     <origin xyz="0.050023043717073556 0.00048164194190997156 0.028033001206298203" rpy="0 0 0"/>
-    <mass value="48.07477097518222"/>
+    <mass value="5.0"/>
     <inertia ixx="3.900293" iyy="0.087383" izz="3.911242" ixy="-0.000484" iyz="0.047745" ixz="2.8e-05"/>
   </inertial>
   <visual>
@@ -193,14 +193,14 @@
   <axis xyz="1.0 -0.0 0.0"/>
 </joint>
 
-<joint name="Revolute 18" type="continuous">
+<joint name="Revolute 18" type="fixed">
   <origin xyz="0.63 0.37785 0.1081" rpy="0 0 0"/>
   <parent link="base_link"/>
   <child link="Side1_1"/>
   <axis xyz="1.0 -0.0 0.0"/>
 </joint>
 
-<joint name="Revolute 19" type="continuous">
+<joint name="Revolute 19" type="fixed">
   <origin xyz="-0.1638 0.37785 0.1081" rpy="0 0 0"/>
   <parent link="base_link"/>
   <child link="Side2_1"/>
