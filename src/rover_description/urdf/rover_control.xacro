@@ -1,84 +1,60 @@
 <?xml version="1.0"?>
-<robot name="scarab"
-    xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="Final"
+xmlns:xacro="http://ros.org/wiki/xacro">
+  <ros2_control name="GazeboSystem" type="system">
+    <xacro:if value="$(arg is_ignition)">
+      <hardware>
+        <plugin>ign_ros2_control/IgnitionSystem</plugin>
+      </hardware>
+    </xacro:if>
+    <!-- ROS 2 Iron or above -->
+    <xacro:unless value="$(arg is_ignition)">
+      <hardware>
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+      </hardware>
+    </xacro:unless>
 
+    <!-- Revolute 14: front wheel on Side2_1 (left side) -->
+    <joint name="Revolute 14">
+      <command_interface name="velocity">
+        <param name="min">-0.7</param>
+        <param name="max">0.7</param>
+      </command_interface>
+      <state_interface name="position" />
+      <state_interface name="velocity" />
+    </joint>
 
-    <ros2_control name="GazeboSystem" type="system">
-        <xacro:if value="$(arg is_ignition)">
-            <hardware>
-                <plugin>ign_ros2_control/IgnitionSystem</plugin>
-            </hardware>
-        </xacro:if>
+    <!-- Revolute 15: rear wheel on Side2_1 (left side) -->
+    <joint name="Revolute 15">
+      <command_interface name="velocity">
+        <param name="min">-0.7</param>
+        <param name="max">0.7</param>
+      </command_interface>
+      <state_interface name="position" />
+      <state_interface name="velocity" />
+    </joint>
 
-        <!-- ROS 2 Iron or above -->
-        <xacro:unless value="$(arg is_ignition)">
-            <hardware>
-                <plugin>gz_ros2_control/GazeboSimSystem</plugin>
-            </hardware>
-        </xacro:unless>
+    <!-- Revolute 16: front wheel on Side1_1 (right side) -->
+    <joint name="Revolute 16">
+      <command_interface name="velocity">
+        <param name="min">-0.7</param>
+        <param name="max">0.7</param>
+      </command_interface>
+      <state_interface name="position" />
+      <state_interface name="velocity" />
+    </joint>
 
-        <joint name="susLeft_joint_b">
-            <state_interface name="position" />
-        </joint>
+    <!-- Revolute 17: rear wheel on Side1_1 (right side) -->
+    <joint name="Revolute 17">
+      <command_interface name="velocity">
+        <param name="min">-0.7</param>
+        <param name="max">0.7</param>
+      </command_interface>
+      <state_interface name="position" />
+      <state_interface name="velocity" />
+    </joint>
 
-        <joint name="susRight_joint_b">
-            <state_interface name="position" />
-        </joint>
+    <!-- Revolute 18 and 19 are fixed joints — no control interfaces needed -->
 
-        <joint name="wheel1_joint">
-            <command_interface name="velocity">
-                <param name="min">-0.7</param>
-                <param name="max">0.7</param>
-            </command_interface>
-            <state_interface name="position" />
-            <state_interface name="velocity" />
-        </joint>
-
-        <joint name="wheel2_joint">
-            <command_interface name="velocity">
-                <param name="min">-0.7</param>
-                <param name="max">0.7</param>
-            </command_interface>
-            <state_interface name="position" />
-            <state_interface name="velocity" />
-        </joint>
-
-        <joint name="wheel3_joint">
-            <command_interface name="velocity">
-                <param name="min">-0.7</param>
-                <param name="max">0.7</param>
-            </command_interface>
-            <state_interface name="position" />
-            <state_interface name="velocity" />
-        </joint>
-
-        <joint name="wheel4_joint">
-            <command_interface name="velocity">
-                <param name="min">-0.7</param>
-                <param name="max">0.7</param>
-            </command_interface>
-            <state_interface name="position" />
-            <state_interface name="velocity" />
-        </joint>
-
-        <joint name="wheel5_joint">
-            <command_interface name="velocity">
-                <param name="min">-0.7</param>
-                <param name="max">0.7</param>
-            </command_interface>
-            <state_interface name="position" />
-            <state_interface name="velocity" />
-        </joint>
-
-        <joint name="wheel6_joint">
-            <command_interface name="velocity">
-                <param name="min">-0.7</param>
-                <param name="max">0.7</param>
-            </command_interface>
-            <state_interface name="position" />
-            <state_interface name="velocity" />
-        </joint>
-
-
-    </ros2_control>
+  </ros2_control>
 </robot>
