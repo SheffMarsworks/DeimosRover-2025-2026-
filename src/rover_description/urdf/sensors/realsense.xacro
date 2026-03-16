@@ -2,7 +2,7 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:property name="PI" value="3.14159265"/>
   <joint name="realsense_joint" type="fixed">
-    <parent link="body_link"/>
+    <parent link="base_link"/>
     <child link="realsense_link"/>
     <origin xyz="-0.39 0.0 0.08" rpy="0.0 0.0 ${pi}"/>
   </joint>

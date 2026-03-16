@@ -1,7 +1,5 @@
 import os
-from pathlib import Path
 
-from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, ExecuteProcess, OpaqueFunction, RegisterEventHandler, SetEnvironmentVariable
 from launch.event_handlers import OnProcessStart
@@ -17,12 +15,14 @@ def launch_setup(launch_context, *args, **kwargs):
     x = LaunchConfiguration("x").perform(launch_context)
     y = LaunchConfiguration("y").perform(launch_context)
     z = LaunchConfiguration("z").perform(launch_context)
+    Y = LaunchConfiguration("Y").perform(launch_context)
 
     # Map world name to world file
     world_dict = {
-        "empty": "empty.sdf",
-        "mars": "mars.world.sdf",
-        "warehouse": "warehouse.sdf",
+        "empty"         : "empty.sdf",
+        "mars"          : "mars.world.sdf",
+        "warehouse"     : "warehouse.sdf",
+        "industrial"    : "industrial_warehouse.sdf",
     }
 
     # Throw error if invalid world name
@@ -66,6 +66,7 @@ def launch_setup(launch_context, *args, **kwargs):
             "-x", x,
             "-y", y,
             "-z", z,
+            "-Y", Y,
         ],
         output="screen",
     )
@@ -96,6 +97,7 @@ def launch_setup(launch_context, *args, **kwargs):
             "/depth_camera/camera_info@sensor_msgs/msg/CameraInfo@ignition.msgs.CameraInfo",
             "/depth_camera/image@sensor_msgs/msg/Image@ignition.msgs.Image",
             "/depth_camera/depth_image@sensor_msgs/msg/Image@ignition.msgs.Image",
+            "/lidar/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
         ],
         remappings=[("/depth_camera/image", "/depth_camera/image_raw")],
     )
@@ -145,6 +147,11 @@ def generate_launch_description():
                 name = "z",
                 default_value="0.3",
                 description="Initial Z position of the robot",
+                ),
+            DeclareLaunchArgument(
+                name = "Y",
+                default_value="0.0",
+                description="Initial Yaw position of the robot",
                 ),
             OpaqueFunction(function=launch_setup),
         ]

@@ -1,47 +1,42 @@
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
-from launch.conditions import IfCondition
-from launch.substitutions import Command, LaunchConfiguration, PathJoinSubstitution
+from launch.actions import DeclareLaunchArgument, OpaqueFunction
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
-from launch_ros.parameter_descriptions import ParameterValue
 
-def generate_launch_description():
-    use_gui = LaunchConfiguration("gui")
+
+def configure_rviz(context):
+
+    mode = LaunchConfiguration("mode").perform(context)
+    use_sim_time = LaunchConfiguration("use_sim_time")
 
     pkg_share = FindPackageShare("rover_description")
-    xacro_file = PathJoinSubstitution([pkg_share, "urdf", "rover.urdf.xacro"])
-    rviz_config = PathJoinSubstitution([pkg_share, "rviz", "display.rviz"])
 
-    robot_description = ParameterValue(
-        Command(["xacro ", xacro_file]),
-        value_type=str
-    )
+    mode_to_rviz = {
+        "teleop": "display.rviz",
+        "slam": "slam.rviz",
+        "nav": "nav.rviz",
+    }
 
-    robot_state_publisher = Node(
-        package="robot_state_publisher",
-        executable="robot_state_publisher",
-        parameters=[{"robot_description": robot_description}],
-        output="screen",
-    )
+    rviz_file = mode_to_rviz.get(mode, "display.rviz")
 
-    joint_state_publisher = Node(
-        package="joint_state_publisher_gui",
-        executable="joint_state_publisher_gui",
-        condition=IfCondition(use_gui),
-        output="screen",
-    )
+    rviz_config = PathJoinSubstitution([pkg_share, "rviz", rviz_file])
 
-    rviz = Node(
-        package="rviz2",
-        executable="rviz2",
-        arguments=["-d", rviz_config],
-        output="screen",
-    )
+    return [
+        Node(
+            package="rviz2",
+            executable="rviz2",
+            arguments=["-d", rviz_config],
+            parameters=[{"use_sim_time": use_sim_time}],
+            output="screen",
+        )
+    ]
+
+
+def generate_launch_description():
 
     return LaunchDescription([
-        DeclareLaunchArgument("gui", default_value="true"),
-        robot_state_publisher,
-        joint_state_publisher,
-        rviz,
+        DeclareLaunchArgument("mode", default_value="teleop"),
+        DeclareLaunchArgument("use_sim_time", default_value="true"),
+        OpaqueFunction(function=configure_rviz),
     ])

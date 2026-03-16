@@ -1,0 +1,38 @@
+rtabmap:
+  ros__parameters:
+
+    use_sim_time: true
+
+    frame_id: base_footprint
+    odom_frame_id: odom
+    map_frame_id: map
+
+    publish_tf: true
+
+    approx_sync: true
+    topic_queue_size: 30
+    sync_queue_size: 30
+
+    # LiDAR-only
+    subscribe_scan_cloud: true
+    subscribe_odom: true
+    subscribe_rgb: false
+    subscribe_depth: false
+
+    # Database
+    database_path: /tmp/rtabmap_lidar.db
+    delete_db_on_start: true
+
+    # 3D mapping
+    Grid/3D: "true"
+    # 0 = laser scan | 1 = depth image(s) | 2 = both
+    Grid/Sensor: "0"
+    Grid/RangeMax: "30.0"
+    Grid/RangeMin: "0.3"
+    Grid/CellSize: "0.10"
+
+    Cloud/Assemble: "true"
+    Cloud/VoxelSize: "0.10"
+    Cloud/DownsamplingStep: "1"
+
+

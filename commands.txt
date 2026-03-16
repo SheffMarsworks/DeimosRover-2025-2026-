@@ -1,48 +1,150 @@
-Init
+Set up the project
+
+In .bashrc, add
+    source /opt/ros/humble/setup.bash
+    source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
+
+Install necessary dependencies
+    sudo apt install -y python3-colcon-clean ros-humble-xacro ros-humble-joint-state-publisher-gui ros-humble-ros-gz ros-humble-ros-gz-bridge ros-humble-ros-gz-sim ros-humble-ros-gz-interfaces ros-humble-ign-ros2-control ros-humble-twist-stamper ros-humble-imu-tools ros-humble-ros2controlcli ros-humble-controller-manager ros-humble-ros2-controllers ros-humble-joy-teleop ros-humble-joy ros-humble-rtabmap-ros
+
+    sudo apt install 
+
     cd code/marswork/DeimosRover-2025-2026-/
     colcon build --symlink-install
     . install/setup.bash
 
 Visualize robot in Rviz
-    ros2 launch rover_description rviz.launch.py
+    ros2 launch rover_description rviz_demo.launch.py
 
 Open marsworld in Gazebo
     ign gazebo -r $(ros2 pkg prefix rover_description)/share/rover_description/worlds/mars.world.sdf
 
-Spawn rover in Gazebo
-    ros2 launch rover_description gazebo.launch.py
-    Argument
-        world
-            ros2 launch rover_description gazebo.launch.py world:=empty
-            ros2 launch rover_description gazebo.launch.py world:=warehouse
-            ros2 launch rover_description gazebo.launch.py world:=mars
-        x | y | z
-            ros2 launch rover_description gazebo.launch.py x:=5.0 y:=5.0 z:=0.35
+Simulation
+    ros2 launch rover_bringup simulation.launch.py
+    ros2 launch rover_bringup simulation.launch.py world:=warehouse
+    ros2 launch rover_bringup simulation.launch.py world:=mars
 
-Teleop
-    sudo apt install ros-humble-ros2controlcli ros-humble-controller-manager ros-humble-ros2-controllers
+Teleop (default is keyboard)
+    ros2 launch rover_bringup simulation.launch.py world:=warehouse mode:=teleop
+    ros2 launch rover_bringup simulation.launch.py world:=warehouse mode:=teleop teleop:=joystick
+Slam
+    ros2 launch rover_bringup simulation.launch.py world:=warehouse mode:=slam
+    ros2 launch rover_bringup simulation.launch.py world:=industrial mode:=slam Y:=1.5708 x:=1.35
 
-    open gazebo
-        ros2 launch rover_description gazebo.launch.py
-    load controller
-        ros2 run controller_manager spawner rover_controller --controller-manager /controller_manager
-    dummy command
-        ros2 topic pub -r 30 /rover_controller/cmd_vel geometry_msgs/msg/TwistStamped \
-        "{header: {frame_id: 'base_link'}, twist: {linear: {x: 0.3}, angular: {z: 0.4}}}"
+(may need to run if transform node died)
+    ros2 run tf2_ros static_transform_publisher 0 0 0 0 0 0 odom base_footprint
+(may need to run if controller node died)
+    ros2 launch rover_controller controller.launch.py
+(debug transform tree)
+    ros2 run tf2_tools view_frames
+(clean workspace and rebuild and source)
+    colcon clean workspace -y && colcon build --symlink-install && . install/setup.bash
 
-    ros2 launch rover_controller keyboard_teleop.launch.py
-    ros2 run teleop_twist_keyboard teleop_twist_keyboard
+(issue)
+Robot drift when skid steering
+3d mapping is using lidar data only, not including the depth camera
+gazebo is opened using cmd, not ros node (not issue, just style)
+(to be done)
+test joystick teleop
+change rover from scarab to deimos
+Add more worlds
+Nav
+    ros2 launch rover_bringup simulation.launch.py mode:=nav
+(note)
+pointcloud_to_laserscan package convert 3D lidar point cloud to 2D laser scan for navigation
+    sudo apt install -y ros-humble-slam-toolbox ros-humble-pointcloud-to-laserscan
 
-ros2 launch rover_bringup simulation.launch.py \
-    teleop:=keyboard \
-    world:=empty
+worlds:
+open world
+    ign gazebo "https://fuel.gazebosim.org/1.0/openrobotics/worlds/industrial-warehouse"
+    ign gazebo "https://fuel.gazebosim.org/1.0/openrobotics/worlds/cave world"
+Download world
+    ign fuel download -t world -u "https://fuel.gazebosim.org/1.0/openrobotics/worlds/industrial-warehouse"
+    world is saved in ~/.ignition/fuel/fuel.gazebosim.org/openrobotics/worlds/...
+    can view by tree ~/.ignition/fuel/fuel.gazebosim.org/openrobotics/worlds
+    or by explorer explorer.exe $(wslpath -w ~/.ignition/fuel/fuel.gazebosim.org/openrobotics/worlds)
 
-ros2 launch rover_bringup simulation.launch.py \
-    teleop:=keyboard \
-    world:=warehouse
-
-ros2 launch rover_bringup simulation.launch.py \
-    teleop:=keyboard \
-    world:=mars
-
-colcon clean workspace -y && colcon build --symlink-install && . install/setup.bash
+worlds
+├── openrobotics
+│   ├── jetty world
+│   ├── ionic world
+│   ├── harmonic world
+│   ├── null island
+│   ├── cave world
+│   ├── garden demo
+│   ├── prius on sonoma raceway
+│   ├── quadcopter teleop
+│   ├── tugbot in warehouse
+│   ├── industrial-warehouse
+│   ├── finals systems preliminary round 2
+│   ├── finals systems preliminary round 1
+│   ├── systems finals prize round
+│   ├── fortress demo
+│   ├── finals prize round world 08
+│   ├── finals prize round world 07
+│   ├── finals prize round world 06
+│   ├── finals prize round world 05
+│   ├── finals prize round world 04
+│   ├── finals prize round world 03
+│   ├── finals prize round world 02
+│   ├── finals prize round world 01
+│   ├── finals preliminary round world 3
+│   ├── finals preliminary round world 2
+│   ├── finals preliminary round world 1
+│   ├── urban circuit 08
+│   ├── urban circuit 07
+│   ├── urban circuit 06
+│   ├── urban circuit 05
+│   ├── urban circuit 04
+│   ├── urban circuit 03
+│   ├── urban circuit 02
+│   ├── urban circuit 01
+│   ├── urban qualification
+│   ├── urban circuit practice 03
+│   ├── urban circuit practice 02
+│   ├── urban circuit practice 01
+│   ├── urban simple 03
+│   ├── urban simple 02
+│   ├── urban simple 01
+│   ├── tunnel circuit 05
+│   ├── tunnel circuit 04
+│   ├── tunnel circuit 03
+│   ├── tunnel circuit 02
+│   ├── tunnel circuit 01
+│   ├── cave qualification
+│   ├── tunnel qualification
+│   ├── tunnel circuit practice 03
+│   ├── tunnel circuit practice 02
+│   ├── tunnel circuit practice 01
+│   ├── tunnel simple 03
+│   ├── tunnel simple 02
+│   ├── tunnel simple 01
+│   ├── niosh ex config b
+│   ├── niosh ex config a
+│   ├── niosh sr config b
+│   ├── niosh sr config a
+│   ├── virtual stix
+│   ├── cave simple 03
+│   ├── cave simple 02
+│   ├── cave simple 01
+│   ├── finals practice 03
+│   ├── finals practice 02
+│   ├── finals practice 01
+│   ├── edifice demo
+│   ├── finals qualification
+│   ├── panda joint control world
+│   ├── nao joint control
+│   ├── cave circuit practice 03
+│   ├── cave circuit 08
+│   ├── cave circuit 07
+│   ├── cave circuit 06
+│   ├── cave circuit 05
+│   ├── cave circuit 04
+│   ├── cave circuit 03
+│   ├── cave circuit 02
+│   ├── cave circuit 01
+│   ├── cave circuit practice 02
+│   ├── test_shapes
+│   ├── cave circuit practice 01
+│   ├── test world 2
+│   └── test world

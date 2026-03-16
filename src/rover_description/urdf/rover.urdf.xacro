@@ -7,19 +7,20 @@
     <xacro:include filename="$(find rover_description)/urdf/rover_gazebo.xacro" />
     <xacro:include filename="$(find rover_description)/urdf/rover_control.xacro" />
     <xacro:include filename="$(find rover_description)/urdf/sensors/realsense.xacro" />
+    <xacro:include filename="$(find rover_description)/urdf/sensors/lidar3d.xacro" />
 
 
     <link name="base_footprint"/>
 
     <joint name="base_footprint_joint" type="fixed">
         <parent link="base_footprint"/>
-        <child link="body_link"/>
-        <origin xyz="0 0 0.393" rpy="0 0 0"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 0.393" rpy="0 0 3.14159"/>
     </joint>
 
 
     <!-- This is the body of the rover -->
-    <link name="body_link">
+    <link name="base_link">
         <inertial>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <mass value="15.0"/>
@@ -47,7 +48,7 @@
 
     <!-- This is the left suspension assembly -->
     <joint name="susLeft_joint" type="fixed">
-        <parent link="body_link" />
+        <parent link="base_link" />
         <child link="susLeft_link" />
         <origin xyz ="-0.1 -0.239 0.04" rpy="0 0 -1.579795" />
         <axis xyz="1 0 0" />
@@ -115,7 +116,7 @@
 
     <!-- This is the right suspension assembly -->
     <joint name="susRight_joint" type="fixed">
-        <parent link="body_link" />
+        <parent link="base_link" />
         <child link="susRight_link" />
         <origin xyz ="-0.1 0.21 0.04" rpy="0 0 -1.579795" />
         <axis xyz="1 0 0" />
@@ -370,7 +371,7 @@
 
     <!-- This is the back left wheel of the rover
     <joint name="wheel2_joint" type="continuous">
-        <parent link="body_link" />
+        <parent link="base_link" />
         <child link="wheel2_link" />
         <origin xyz ="-0.3 0.35 -0.1" rpy="0 0 0" />
         <axis xyz="0 1 0" />
