@@ -6,6 +6,8 @@ from launch.event_handlers import OnProcessStart
 from launch.substitutions import Command, LaunchConfiguration
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
+from launch_ros.parameter_descriptions import ParameterValue
+from launch.substitutions import Command
 
 
 def launch_setup(launch_context, *args, **kwargs):
@@ -37,8 +39,10 @@ def launch_setup(launch_context, *args, **kwargs):
     xacro_path = os.path.join(desc_pkg_path, "urdf", "Final.xacro")
 
     # Xacro to URDF
-    robot_description = Command(["xacro ", xacro_path])
-
+    robot_description = ParameterValue(
+    Command(["xacro ", xacro_path, " is_ignition:=true"]),
+    value_type=str
+)
     # Start Gazebo
     gazebo = ExecuteProcess(
         cmd=["ign", "gazebo", "-r", world_path],

@@ -4,6 +4,17 @@
 <xacro:include filename="$(find rover_description)/urdf/materials.xacro" />
 <xacro:include filename="$(find rover_description)/urdf/Final.trans" />
 <xacro:include filename="$(find rover_description)/urdf/Final.gazebo" />
+
+<xacro:arg name="is_ignition" default="true"/>
+<xacro:include filename="$(find rover_description)/urdf/rover_control.xacro" />
+
+<link name="base_footprint"/>
+<joint name="base_footprint_joint" type="fixed">
+  <parent link="base_footprint"/>
+  <child link="base_link"/>
+  <origin xyz="0 0 0.393" rpy="0 0 0"/>
+</joint>
+
 <link name="base_link">
   <inertial>
     <origin xyz="0.23371470080552523 0.3424215459495483 0.11792924666461195" rpy="0 0 0"/>

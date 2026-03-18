@@ -4,8 +4,12 @@
 <xacro:property name="body_color" value="Gazebo/Silver" />
 
 <gazebo>
-  <plugin name="control" filename="libgazebo_ros_control.so"/>
+  <plugin filename="ign_ros2_control-system" 
+          name="ign_ros2_control::IgnitionROS2ControlPlugin">
+    <parameters>$(find rover_controller)/config/controller.yaml</parameters>
+  </plugin>
 </gazebo>
+
 <gazebo reference="base_link">
   <material>${body_color}</material>
   <mu1>0.2</mu1>
