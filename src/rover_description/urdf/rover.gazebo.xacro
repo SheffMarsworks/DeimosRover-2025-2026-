@@ -1,63 +1,38 @@
-<?xml version="1.0" ?>
-<robot name="Deimos/gazebo" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+<?xml version="1.0"?>
+<robot name="Deimos/gazebo" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-<xacro:property name="body_color" value="Gazebo/Silver" />
+  <xacro:property name="body_color" value="Gazebo/Silver" />
+  <xacro:property name="default_mu1" value="0.2" />
+  <xacro:property name="default_mu2" value="0.2" />
 
-<gazebo>
-  <plugin filename="ign_ros2_control-system" 
-          name="ign_ros2_control::IgnitionROS2ControlPlugin">
-    <parameters>$(find rover_controller)/config/controller.yaml</parameters>
-  </plugin>
-</gazebo>
+  <xacro:macro name="gazebo_surface" params="link_name">
+    <gazebo reference="${link_name}">
+      <material>${body_color}</material>
+      <mu1>${default_mu1}</mu1>
+      <mu2>${default_mu2}</mu2>
+      <selfCollide>true</selfCollide>
+    </gazebo>
+  </xacro:macro>
 
-<gazebo reference="base_link">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <selfCollide>true</selfCollide>
-  <gravity>true</gravity>
-</gazebo>
+  <!-- ros2_control plugin -->
+  <gazebo>
+    <plugin filename="ign_ros2_control-system"
+      name="ign_ros2_control::IgnitionROS2ControlPlugin">
+      <parameters>$(find rover_controller)/config/controller.yaml</parameters>
+    </plugin>
+  </gazebo>
 
-<gazebo reference="Wheel2_1">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <selfCollide>true</selfCollide>
-</gazebo>
+  <!-- Base -->
+  <xacro:gazebo_surface link_name="base_link" />
 
-<gazebo reference="Wheel1_1">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <selfCollide>true</selfCollide>
-</gazebo>
+  <!-- Wheels -->
+  <xacro:gazebo_surface link_name="wheel_back_left" />
+  <xacro:gazebo_surface link_name="wheel_front_left" />
+  <xacro:gazebo_surface link_name="wheel_back_right" />
+  <xacro:gazebo_surface link_name="wheel_front_right" />
 
-<gazebo reference="Wheel2__1__2">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <selfCollide>true</selfCollide>
-</gazebo>
-
-<gazebo reference="Wheel2__1__1">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <selfCollide>true</selfCollide>
-</gazebo>
-
-<gazebo reference="Side1_1">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <selfCollide>true</selfCollide>
-</gazebo>
-
-<gazebo reference="Side2_1">
-  <material>${body_color}</material>
-  <mu1>0.2</mu1>
-  <mu2>0.2</mu2>
-  <selfCollide>true</selfCollide>
-</gazebo>
+  <!-- Suspensions -->
+  <xacro:gazebo_surface link_name="suspension_right" />
+  <xacro:gazebo_surface link_name="suspension_left" />
 
 </robot>

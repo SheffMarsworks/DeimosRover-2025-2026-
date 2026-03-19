@@ -29,7 +29,7 @@ Teleop (default is keyboard)
     ros2 launch rover_bringup simulation.launch.py world:=warehouse mode:=teleop teleop:=joystick
 Slam
     ros2 launch rover_bringup simulation.launch.py world:=warehouse mode:=slam
-    ros2 launch rover_bringup simulation.launch.py world:=industrial mode:=slam Y:=1.5708 x:=1.35
+    ros2 launch rover_bringup simulation.launch.py world:=industrial mode:=slam Y:=1.5708 x:=1.8 y:=-9
 
 (may need to run if transform node died)
     ros2 run tf2_ros static_transform_publisher 0 0 0 0 0 0 odom base_footprint
@@ -41,15 +41,14 @@ Slam
     colcon clean workspace -y && colcon build --symlink-install && . install/setup.bash
 
 (issue)
-Robot drift when skid steering
-3d mapping is using lidar data only, not including the depth camera
+rover veered to the right when moving forward
+cant rotate
+xacro macro cant be used on the main urdf
 gazebo is opened using cmd, not ros node (not issue, just style)
 (to be done)
 test joystick teleop
-change rover from scarab to deimos
 Add more worlds
 Nav
-    ros2 launch rover_bringup simulation.launch.py mode:=nav
 (note)
 pointcloud_to_laserscan package convert 3D lidar point cloud to 2D laser scan for navigation
     sudo apt install -y ros-humble-slam-toolbox ros-humble-pointcloud-to-laserscan

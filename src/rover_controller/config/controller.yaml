@@ -9,27 +9,24 @@ controller_manager:
     rover_controller:
       type: diff_drive_controller/DiffDriveController
 
-    Revolute_14_effort_controller:
-      type: effort_controllers/JointEffortController
+    # Revolute_14_effort_controller:
+    #   type: effort_controllers/JointEffortController
 
-    Revolute_15_effort_controller:
-      type: effort_controllers/JointEffortController
+    # Revolute_15_effort_controller:
+    #   type: effort_controllers/JointEffortController
 
-    Revolute_16_effort_controller:
-      type: effort_controllers/JointEffortController
+    # Revolute_16_effort_controller:
+    #   type: effort_controllers/JointEffortController
 
-    Revolute_17_effort_controller:
-      type: effort_controllers/JointEffortController
+    # Revolute_17_effort_controller:
+    #   type: effort_controllers/JointEffortController
 
-# Diff drive controller
-# Left side  = Side2_1 wheels: Revolute 14 (front), Revolute 15 (rear)
-# Right side = Side1_1 wheels: Revolute 16 (front), Revolute 17 (rear)
 rover_controller:
   ros__parameters:
     publish_rate: 50.0
     base_frame_id: base_footprint
-    left_wheel_names: ["Revolute 14", "Revolute 15"]
-    right_wheel_names: ["Revolute 16", "Revolute 17"]
+    left_wheel_names: ["wheel_back_left_joint", "wheel_front_left_joint"]
+    right_wheel_names: ["wheel_back_right_joint", "wheel_front_right_joint"]
     wheel_separation: 0.7
     wheel_radius: 0.123
     use_stamped_vel: true
@@ -40,35 +37,35 @@ rover_controller:
     min_angular_velocity: -1.0
     odom_topic: encoder
 
-# Effort controllers for each wheel joint
-Revolute_14_effort_controller:
-  ros__parameters:
-    joint: "Revolute 14"
-    pid:
-      p: 100.0
-      i: 0.01
-      d: 10.0
+# # Effort controllers for each wheel joint
+# Revolute_14_effort_controller:
+#   ros__parameters:
+#     joint: "Revolute 14"
+#     pid:
+#       p: 100.0
+#       i: 0.01
+#       d: 10.0
 
-Revolute_15_effort_controller:
-  ros__parameters:
-    joint: "Revolute 15"
-    pid:
-      p: 100.0
-      i: 0.01
-      d: 10.0
+# Revolute_15_effort_controller:
+#   ros__parameters:
+#     joint: "Revolute 15"
+#     pid:
+#       p: 100.0
+#       i: 0.01
+#       d: 10.0
 
-Revolute_16_effort_controller:
-  ros__parameters:
-    joint: "Revolute 16"
-    pid:
-      p: 100.0
-      i: 0.01
-      d: 10.0
+# Revolute_16_effort_controller:
+#   ros__parameters:
+#     joint: "Revolute 16"
+#     pid:
+#       p: 100.0
+#       i: 0.01
+#       d: 10.0
 
-Revolute_17_effort_controller:
-  ros__parameters:
-    joint: "Revolute 17"
-    pid:
-      p: 100.0
-      i: 0.01
-      d: 10.0
+# Revolute_17_effort_controller:
+#   ros__parameters:
+#     joint: "Revolute 17"
+#     pid:
+#       p: 100.0
+#       i: 0.01
+#       d: 10.0
