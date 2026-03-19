@@ -1,18 +1,9 @@
 <?xml version="1.0"?>
-<robot name="Final"
-xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="Deimos/control" xmlns:xacro="http://ros.org/wiki/xacro">
   <ros2_control name="GazeboSystem" type="system">
-    <xacro:if value="$(arg is_ignition)">
-      <hardware>
-        <plugin>ign_ros2_control/IgnitionSystem</plugin>
-      </hardware>
-    </xacro:if>
-    <!-- ROS 2 Iron or above -->
-    <xacro:unless value="$(arg is_ignition)">
-      <hardware>
-        <plugin>gz_ros2_control/GazeboSimSystem</plugin>
-      </hardware>
-    </xacro:unless>
+    <hardware>
+      <plugin>ign_ros2_control/IgnitionSystem</plugin>
+    </hardware>
 
     <!-- Revolute 14: front wheel on Side2_1 (left side) -->
     <joint name="Revolute 14">
@@ -53,8 +44,6 @@ xmlns:xacro="http://ros.org/wiki/xacro">
       <state_interface name="position" />
       <state_interface name="velocity" />
     </joint>
-
-    <!-- Revolute 18 and 19 are fixed joints — no control interfaces needed -->
 
   </ros2_control>
 </robot>

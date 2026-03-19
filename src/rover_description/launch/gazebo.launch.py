@@ -36,13 +36,10 @@ def launch_setup(launch_context, *args, **kwargs):
     # Paths
     desc_pkg_path = FindPackageShare("rover_description").perform(launch_context)
     world_path = os.path.join(desc_pkg_path, "worlds", world_dict[world_name])
-    xacro_path = os.path.join(desc_pkg_path, "urdf", "Final.xacro")
+    xacro_path = os.path.join(desc_pkg_path, "urdf", "rover.urdf.xacro")
 
     # Xacro to URDF
-    robot_description = ParameterValue(
-    Command(["xacro ", xacro_path, " is_ignition:=true"]),
-    value_type=str
-)
+    robot_description = ParameterValue(Command(["xacro ", xacro_path]), value_type=str)
     # Start Gazebo
     gazebo = ExecuteProcess(
         cmd=["ign", "gazebo", "-r", world_path],
