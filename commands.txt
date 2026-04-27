@@ -148,3 +148,18 @@ worlds
 │   ├── cave circuit practice 01
 │   ├── test world 2
 │   └── test world
+
+TapoCam package
+    # optional if missing in your environment
+    pip install onvif-zeep pytapo opencv-python
+
+    colcon build --packages-select rover_tapocam --symlink-install
+    . install/setup.bash
+
+    export TAPOCAM_USER="your_camera_user"
+    export TAPOCAM_PASSWORD="your_camera_password"
+
+    # captures go to data/tapocam_images by default
+    ros2 run rover_tapocam tapo_take_photos --count 3
+    ros2 run rover_tapocam tapo_panoramic --start-from-home --return-home
+    ros2 run rover_tapocam tapo_ptz_wasd

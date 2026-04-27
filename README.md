@@ -29,6 +29,8 @@ TBC
 TBC
 ```
 ## Documentation
+- Tapo camera tools package: [src/rover_tapocam/README.md](src/rover_tapocam/README.md)
+
 ## Acknowledgments
 - [Project Marsworks Software Team](https://marsworks.sites.sheffield.ac.uk/team#h.4kuzgvqqcu52).
 - [@Jan](https://github.com/JanUniAccount) for providing the [original Mars rover simulation URDF](https://github.com/JanUniAccount/mars_rover_pkg) in ROS1.
@@ -38,4 +40,3 @@ TBC
 <a href="https://github.com/SheffMarsworks/DeimosRover-2025-2026-/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=SheffMarsworks/DeimosRover-2025-2026-"/>
 </a>
-

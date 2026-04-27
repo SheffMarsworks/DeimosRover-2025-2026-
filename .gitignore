@@ -46,6 +46,10 @@ srv/_*.py
 qtcreator-*
 *.user
 
+# Tapo camera captures
+data/tapocam_images/*
+!data/tapocam_images/.gitkeep
+
 /planning/cfg
 /planning/docs
 /planning/src
