@@ -9,6 +9,7 @@
   <xacro:include filename="$(find rover_description)/urdf/sensors/lidar3d.xacro" />
   <!-- <xacro:include filename="$(find rover_description)/urdf/rover.trans.xacro" /> -->
   <xacro:include filename="$(find rover_description)/urdf/rover.control.xacro" />
+  <xacro:include filename="$(find rover_description)/urdf/sensors/realsense.xacro" />
 
   <link name="base_footprint" />
   <joint name="base_footprint_joint" type="fixed">
@@ -17,10 +18,16 @@
     <origin xyz="-0.375 0.235 0.222" rpy="0 0 ${-PI/2}" />
   </joint>
 
+  <joint name="realsense_joint" type="fixed">
+    <parent link="base_link" />
+    <child link="realsense_link" />
+    <origin xyz="0.25 0.8 0.15" rpy="0.0 0.0 ${PI/2}" />
+  </joint>
+
   <joint name="lidar_joint" type="fixed">
     <parent link="base_link" />
     <child link="lidar_link" />
-    <origin xyz="0.25 0.8 0.1" rpy="0 0 0" />
+    <origin xyz="0.25 0.75 0.1" rpy="0 0 0" />
   </joint>
 
   <link name="lidar_link">
@@ -61,7 +68,7 @@
   <link name="wheel_back_left">
     <inertial>
       <origin xyz="0.060000000000048695 9.626243984289795e-07 0.00010157518963996304" rpy="0 0 0" />
-      <mass value="35.0" />
+      <mass value="100.0" />
       <inertia ixx="0.234154" iyy="0.134117" izz="0.153907" ixy="-0.0" iyz="8e-06" ixz="0.0" />
     </inertial>
     <visual>
