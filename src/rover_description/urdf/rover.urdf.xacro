@@ -2,32 +2,25 @@
 <robot name="Deimos" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <xacro:property name="PI" value="3.141592653589793" />
-  <xacro:property name="mesh_scale" value="0.001 0.001 0.001" />
 
   <xacro:include filename="$(find rover_description)/urdf/rover.material.xacro" />
   <xacro:include filename="$(find rover_description)/urdf/rover.gazebo.xacro" />
   <xacro:include filename="$(find rover_description)/urdf/sensors/lidar3d.xacro" />
-  <!-- <xacro:include filename="$(find rover_description)/urdf/rover.trans.xacro" /> -->
+  <xacro:include filename="$(find rover_description)/urdf/rover.trans.xacro" />
   <xacro:include filename="$(find rover_description)/urdf/rover.control.xacro" />
-  <xacro:include filename="$(find rover_description)/urdf/sensors/realsense.xacro" />
+
 
   <link name="base_footprint" />
   <joint name="base_footprint_joint" type="fixed">
     <parent link="base_footprint" />
     <child link="base_link" />
-    <origin xyz="-0.375 0.235 0.222" rpy="0 0 ${-PI/2}" />
-  </joint>
-
-  <joint name="realsense_joint" type="fixed">
-    <parent link="base_link" />
-    <child link="realsense_link" />
-    <origin xyz="0.25 0.8 0.15" rpy="0.0 0.0 ${PI/2}" />
+    <origin xyz="0 0 0.2" rpy="0 0 0" />
   </joint>
 
   <joint name="lidar_joint" type="fixed">
     <parent link="base_link" />
     <child link="lidar_link" />
-    <origin xyz="0.25 0.75 0.1" rpy="0 0 0" />
+    <origin xyz="0.5 0 0.1" rpy="0 0 0" />
   </joint>
 
   <link name="lidar_link">
@@ -36,19 +29,17 @@
       <geometry>
         <box size="0.05 0.05 0.05" />
       </geometry>
-      <material name="dark">
-        <color rgba="0.1 0.1 0.1 1.0" />
-      </material>
+      <material name="black" />
     </visual>
   </link>
 
-  <!-- Chassis is 752 x 470 x 222 mm -->
   <link name="base_link">
     <inertial>
-      <origin xyz="0.23371470080552523 0.3424215459495483 0.11792924666461195" rpy="0 0 0" />
-      <mass value="36.0" />
-      <inertia ixx="28.457355" iyy="14.276737" izz="34.968035" ixy="0.085086" iyz="0.387247"
-        ixz="-0.119086" />
+      <origin xyz="0.000140 -0.011273 0.154038" rpy="0 0 0" />
+      <mass value="40.0" />
+      <inertia
+        ixx="0.897081" iyy="1.842092" izz="2.420768"
+        ixy="0.000000" iyz="-0.000000" ixz="-0.060668" />
     </inertial>
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
@@ -65,14 +56,179 @@
     </collision>
   </link>
 
-  <link name="wheel_back_left">
+  <!-- Suspension link macro -->
+  <xacro:macro name="suspension_link" params="name side">
+    <link name="${name}">
+      <inertial>
+        <origin xyz="0 ${side * 0.044665} -0.006059" rpy="0 0 0" />
+        <mass value="40.25594624417332" />
+        <inertia
+          ixx="0.072836" iyy="3.825904" izz="3.812794"
+          ixy="0.0" iyz="${side * 0.013096}" ixz="0.0" />
+      </inertial>
+
+      <visual>
+        <origin xyz="-0.023205 ${side * 0.386373} -0.118244" rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://rover_description/meshes/${name}.stl"
+            scale="0.001 0.001 0.001" />
+        </geometry>
+        <material name="soft_orange" />
+      </visual>
+
+      <collision>
+        <origin xyz="-0.023205 ${side * 0.386373} -0.118244" rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://rover_description/meshes/${name}.stl"
+            scale="0.001 0.001 0.001" />
+        </geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+
+  <xacro:suspension_link name="suspension_left" side="-1" />
+  <xacro:suspension_link name="suspension_right" side="1" />
+
+  <!-- Wheel link macro -->
+  <xacro:macro name="wheel_link" params="name front_back_sign side_sign">
+    <link name="${name}">
+      <inertial>
+        <origin xyz="0 ${side_sign * -0.06} 0" rpy="0 0 0" />
+        <mass value="21.981308930926716" />
+        <inertia
+          ixx="0.133433" iyy="0.232318" izz="0.151641"
+          ixy="0.0" iyz="0.0" ixz="0.0" />
+      </inertial>
+
+      <visual>
+        <origin
+          xyz="${front_back_sign * 0.475 - 0.023205} ${side_sign * 0.2951 + 0.011273} 0.061756"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://rover_description/meshes/${name}.stl"
+            scale="0.001 0.001 0.001" />
+        </geometry>
+        <material name="black" />
+      </visual>
+
+      <collision>
+        <origin
+          xyz="${front_back_sign * 0.475 - 0.023205} ${side_sign * 0.2951 + 0.011273} 0.061756"
+          rpy="0 0 0" />
+        <geometry>
+          <mesh
+            filename="package://rover_description/meshes/${name}.stl"
+            scale="0.001 0.001 0.001" />
+        </geometry>
+      </collision>
+    </link>
+  </xacro:macro>
+
+  <xacro:wheel_link name="wheel_back_left" front_back_sign="1" side_sign="-1" />
+  <xacro:wheel_link name="wheel_front_left" front_back_sign="-1" side_sign="-1" />
+  <xacro:wheel_link name="wheel_back_right" front_back_sign="1" side_sign="1" />
+  <xacro:wheel_link name="wheel_front_right" front_back_sign="-1" side_sign="1" />
+
+  <!-- Suspension joint macro -->
+  <xacro:macro name="suspension_joint" params="side y">
+    <joint name="suspension_${side}_joint" type="fixed">
+      <origin xyz="0.023205 ${y} 0.118244" rpy="0 0 0" />
+      <parent link="base_link" />
+      <child link="suspension_${side}" />
+    </joint>
+  </xacro:macro>
+
+  <xacro:suspension_joint side="left" y="0.363827" />
+  <xacro:suspension_joint side="right" y="-0.386373" />
+
+  <!-- Wheel joint macro -->
+  <xacro:macro name="wheel_joint" params="parent child x_sign y_sign">
+    <joint name="${child}_joint" type="continuous">
+      <origin xyz="${x_sign * 0.475} ${y_sign * 0.08} -0.18" rpy="0 0 0" />
+      <parent link="${parent}" />
+      <child link="${child}" />
+      <axis xyz="0 1 0" />
+    </joint>
+  </xacro:macro>
+
+  <xacro:wheel_joint
+    parent="suspension_left" child="wheel_back_left"
+    x_sign="-1" y_sign="-1"
+  />
+
+  <xacro:wheel_joint
+    parent="suspension_left" child="wheel_front_left"
+    x_sign="1" y_sign="-1"
+  />
+
+  <xacro:wheel_joint
+    parent="suspension_right" child="wheel_back_right"
+    x_sign="-1" y_sign="1"
+  />
+
+  <xacro:wheel_joint
+    parent="suspension_right" child="wheel_front_right"
+    x_sign="1" y_sign="1"
+  />
+
+
+  <!-- <link name="suspension_left">
     <inertial>
-      <origin xyz="0.060000000000048695 9.626243984289795e-07 0.00010157518963996304" rpy="0 0 0" />
-      <mass value="100.0" />
-      <inertia ixx="0.234154" iyy="0.134117" izz="0.153907" ixy="-0.0" iyz="8e-06" ixz="0.0" />
+      <origin xyz="-4.734432529317212e-07 -0.044665170499521234 -0.006058868852704888" rpy="0 0 0" />
+      <mass value="40.25594624417332" />
+      <inertia ixx="0.072836" iyy="3.825904" izz="3.812794" ixy="0.0" iyz="-0.013096" ixz="-0.0" />
     </inertial>
     <visual>
-      <origin xyz="0.1758 0.049434 0.072191" rpy="0 0 0" />
+      <origin xyz="-0.023205 -0.363827 -0.118244" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://rover_description/meshes/suspension_left.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="soft_orange" />
+    </visual>
+    <collision>
+      <origin xyz="-0.023205 -0.363827 -0.118244" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://rover_description/meshes/suspension_left.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="suspension_right">
+    <inertial>
+      <origin xyz="-4.7344325634218754e-07 0.044664599818116324 -0.0060588688527043605" rpy="0 0 0" />
+      <mass value="40.25594624417315" />
+      <inertia ixx="0.072836" iyy="3.825904" izz="3.812794" ixy="0.0" iyz="0.013096" ixz="-0.0" />
+    </inertial>
+    <visual>
+      <origin xyz="-0.023205 0.386373 -0.118244" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://rover_description/meshes/suspension_right.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+      <material name="soft_orange" />
+    </visual>
+    <collision>
+      <origin xyz="-0.023205 0.386373 -0.118244" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://rover_description/meshes/suspension_right.stl"
+          scale="0.001 0.001 0.001" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link name="wheel_back_left">
+    <inertial>
+      <origin xyz="-4.734432874631267e-07 0.05999971465929932 -4.999999977522984e-07" rpy="0 0 0" />
+      <mass value="21.981308930926716" />
+      <inertia ixx="0.133433" iyy="0.232318" izz="0.151641" ixy="0.0" iyz="0.0" ixz="-0.0" />
+    </inertial>
+    <visual>
+      <origin xyz="0.451795 -0.283827 0.061756" rpy="0 0 0" />
       <geometry>
         <mesh filename="package://rover_description/meshes/wheel_back_left.stl"
           scale="0.001 0.001 0.001" />
@@ -80,7 +236,7 @@
       <material name="black" />
     </visual>
     <collision>
-      <origin xyz="0.1758 0.049434 0.072191" rpy="0 0 0" />
+      <origin xyz="0.451795 -0.283827 0.061756" rpy="0 0 0" />
       <geometry>
         <mesh filename="package://rover_description/meshes/wheel_back_left.stl"
           scale="0.001 0.001 0.001" />
@@ -90,12 +246,12 @@
 
   <link name="wheel_front_left">
     <inertial>
-      <origin xyz="0.05999999999997653 1.1249441103089453e-06 0.00010186480729457159" rpy="0 0 0" />
-      <mass value="35.0" />
-      <inertia ixx="0.234154" iyy="0.134117" izz="0.153907" ixy="-0.0" iyz="8e-06" ixz="0.0" />
+      <origin xyz="-4.734432948461098e-07 0.05999971465929599 -4.999999983490433e-07" rpy="0 0 0" />
+      <mass value="21.981308930926716" />
+      <inertia ixx="0.133433" iyy="0.232318" izz="0.151641" ixy="0.0" iyz="0.0" ixz="-0.0" />
     </inertial>
     <visual>
-      <origin xyz="0.1758 -0.800498 0.083039" rpy="0 0 0" />
+      <origin xyz="-0.498205 -0.283827 0.061756" rpy="0 0 0" />
       <geometry>
         <mesh filename="package://rover_description/meshes/wheel_front_left.stl"
           scale="0.001 0.001 0.001" />
@@ -103,7 +259,7 @@
       <material name="black" />
     </visual>
     <collision>
-      <origin xyz="0.1758 -0.800498 0.083039" rpy="0 0 0" />
+      <origin xyz="-0.498205 -0.283827 0.061756" rpy="0 0 0" />
       <geometry>
         <mesh filename="package://rover_description/meshes/wheel_front_left.stl"
           scale="0.001 0.001 0.001" />
@@ -113,12 +269,12 @@
 
   <link name="wheel_back_right">
     <inertial>
-      <origin xyz="-0.059999999999952314 1.1891813821787722e-06 0.00010132422446335054" rpy="0 0 0" />
-      <mass value="35.0" />
-      <inertia ixx="0.234154" iyy="0.134117" izz="0.153907" ixy="0.0" iyz="8e-06" ixz="-0.0" />
+      <origin xyz="-4.7344326215004173e-07 -0.06000028534070151 -4.99999998626599e-07" rpy="0 0 0" />
+      <mass value="21.981308930926716" />
+      <inertia ixx="0.133433" iyy="0.232318" izz="0.151641" ixy="0.0" iyz="-0.0" ixz="0.0" />
     </inertial>
     <visual>
-      <origin xyz="-0.6425 0.049502 0.082708" rpy="0 0 0" />
+      <origin xyz="0.451795 0.306373 0.061756" rpy="0 0 0" />
       <geometry>
         <mesh filename="package://rover_description/meshes/wheel_back_right.stl"
           scale="0.001 0.001 0.001" />
@@ -126,7 +282,7 @@
       <material name="black" />
     </visual>
     <collision>
-      <origin xyz="-0.6425 0.049502 0.082708" rpy="0 0 0" />
+      <origin xyz="0.451795 0.306373 0.061756" rpy="0 0 0" />
       <geometry>
         <mesh filename="package://rover_description/meshes/wheel_back_right.stl"
           scale="0.001 0.001 0.001" />
@@ -136,12 +292,12 @@
 
   <link name="wheel_front_right">
     <inertial>
-      <origin xyz="-0.06 7.512494407269088e-05 0.00026586480728614525" rpy="0 0 0" />
-      <mass value="35.0" />
-      <inertia ixx="0.234154" iyy="0.134117" izz="0.153907" ixy="0.0" iyz="8e-06" ixz="-0.0" />
+      <origin xyz="-4.734432568209712e-07 -0.06000028534070406 -4.999999991955884e-07" rpy="0 0 0" />
+      <mass value="21.981308930926716" />
+      <inertia ixx="0.133433" iyy="0.232318" izz="0.151641" ixy="-0.0" iyz="-0.0" ixz="-0.0" />
     </inertial>
     <visual>
-      <origin xyz="-0.6425 -0.800424 0.083203" rpy="0 0 0" />
+      <origin xyz="-0.498205 0.306373 0.061756" rpy="0 0 0" />
       <geometry>
         <mesh filename="package://rover_description/meshes/wheel_front_right.stl"
           scale="0.001 0.001 0.001" />
@@ -149,7 +305,7 @@
       <material name="black" />
     </visual>
     <collision>
-      <origin xyz="-0.6425 -0.800424 0.083203" rpy="0 0 0" />
+      <origin xyz="-0.498205 0.306373 0.061756" rpy="0 0 0" />
       <geometry>
         <mesh filename="package://rover_description/meshes/wheel_front_right.stl"
           scale="0.001 0.001 0.001" />
@@ -157,94 +313,46 @@
     </collision>
   </link>
 
-  <link name="suspension_right">
-    <inertial>
-      <origin xyz="-0.04997257661493937 0.0004804691908492642 0.02785086678998311" rpy="0 0 0" />
-      <mass value="50.0" />
-      <inertia ixx="3.901891" iyy="0.088961" izz="3.911318" ixy="-0.000394" iyz="0.044008"
-        ixz="4.1e-05" />
-    </inertial>
-    <visual>
-      <origin xyz="-0.63 -0.37785 -0.1081" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://rover_description/meshes/suspension_right.stl"
-          scale="0.001 0.001 0.001" />
-      </geometry>
-      <material name="soft_orange" />
-    </visual>
-    <collision>
-      <origin xyz="-0.63 -0.37785 -0.1081" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://rover_description/meshes/suspension_right.stl"
-          scale="0.001 0.001 0.001" />
-      </geometry>
-    </collision>
-  </link>
-
-  <link name="suspension_left">
-    <inertial>
-      <origin xyz="0.050023043717073556 0.00048164194190997156 0.028033001206298203" rpy="0 0 0" />
-      <mass value="50.0" />
-      <inertia ixx="3.900293" iyy="0.087383" izz="3.911242" ixy="-0.000484" iyz="0.047745"
-        ixz="2.8e-05" />
-    </inertial>
-    <visual>
-      <origin xyz="0.1638 -0.37785 -0.1081" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://rover_description/meshes/suspension_left.stl"
-          scale="0.001 0.001 0.001" />
-      </geometry>
-      <material name="soft_orange" />
-    </visual>
-    <collision>
-      <origin xyz="0.1638 -0.37785 -0.1081" rpy="0 0 0" />
-      <geometry>
-        <mesh filename="package://rover_description/meshes/suspension_left.stl"
-          scale="0.001 0.001 0.001" />
-      </geometry>
-    </collision>
-  </link>
-
-  <joint name="wheel_back_left_joint" type="continuous">
-    <origin xyz="-0.012 -0.427284 -0.180291" rpy="0 0 0" />
-    <parent link="suspension_left" />
-    <child link="wheel_back_left" />
-    <axis xyz="-1 0 0" />
-  </joint>
-
-  <joint name="wheel_front_left_joint" type="continuous">
-    <origin xyz="-0.012 0.422648 -0.191139" rpy="0 0 0" />
-    <parent link="suspension_left" />
-    <child link="wheel_front_left" />
-    <axis xyz="-1 0 0" />
-  </joint>
-
-  <joint name="wheel_back_right_joint" type="continuous">
-    <origin xyz="0.0125 -0.427352 -0.190808" rpy="0 0 0" />
-    <parent link="suspension_right" />
-    <child link="wheel_back_right" />
-    <axis xyz="-1 0 0" />
-  </joint>
-
-  <joint name="wheel_front_right_joint" type="continuous">
-    <origin xyz="0.0125 0.422574 -0.191303" rpy="0 0 0" />
-    <parent link="suspension_right" />
-    <child link="wheel_front_right" />
-    <axis xyz="-1 0 0" />
+  <joint name="suspension_left_joint" type="fixed">
+    <origin xyz="0.023205 0.363827 0.118244" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="suspension_left" />
+    <axis xyz="0.0 1.0 -0.0" />
   </joint>
 
   <joint name="suspension_right_joint" type="fixed">
-    <origin xyz="0.63 0.37785 0.1081" rpy="0 0 0" />
+    <origin xyz="0.023205 -0.386373 0.118244" rpy="0 0 0" />
     <parent link="base_link" />
     <child link="suspension_right" />
-    <axis xyz="1.0 -0.0 0.0" />
+    <axis xyz="-0.0 -1.0 0.0" />
   </joint>
 
-  <joint name="suspension_left_joint" type="fixed">
-    <origin xyz="-0.1638 0.37785 0.1081" rpy="0 0 0" />
-    <parent link="base_link" />
-    <child link="suspension_left" />
-    <axis xyz="-1.0 0.0 -0.0" />
+  <joint name="wheel_back_left_joint" type="continuous">
+    <origin xyz="-0.475 -0.08 -0.18" rpy="0 0 0" />
+    <parent link="suspension_left" />
+    <child link="wheel_back_left" />
+    <axis xyz="0.0 1.0 -0.0" />
   </joint>
+
+  <joint name="wheel_front_left_joint" type="continuous">
+    <origin xyz="0.475 -0.08 -0.18" rpy="0 0 0" />
+    <parent link="suspension_left" />
+    <child link="wheel_front_left" />
+    <axis xyz="-0.0 1.0 0.0" />
+  </joint>
+
+  <joint name="wheel_back_right_joint" type="continuous">
+    <origin xyz="-0.475 0.08 -0.18" rpy="0 0 0" />
+    <parent link="suspension_right" />
+    <child link="wheel_back_right" />
+    <axis xyz="0.0 1.0 -0.0" />
+  </joint>
+
+  <joint name="wheel_front_right_joint" type="continuous">
+    <origin xyz="0.475 0.08 -0.18" rpy="0 0 0" />
+    <parent link="suspension_right" />
+    <child link="wheel_front_right" />
+    <axis xyz="-0.0 1.0 0.0" />
+  </joint> -->
 
 </robot>

@@ -1,70 +1,34 @@
 <?xml version="1.0"?>
-<robot name="Deimos/transmission" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="Deimos_Transmission" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <transmission name="wheel_back_left_tran">
-    <type>transmission_interface/SimpleTransmission</type>
+  <ros2_control name="GazeboSystem" type="system">
+    <hardware>
+      <plugin>ign_ros2_control/IgnitionSystem</plugin>
+    </hardware>
+
     <joint name="wheel_back_left_joint">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <command_interface name="velocity" />
+      <state_interface name="position" />
+      <state_interface name="velocity" />
     </joint>
-    <actuator name="wheel_back_left_actr">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
 
-  <transmission name="wheel_front_left_tran">
-    <type>transmission_interface/SimpleTransmission</type>
     <joint name="wheel_front_left_joint">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <command_interface name="velocity" />
+      <state_interface name="position" />
+      <state_interface name="velocity" />
     </joint>
-    <actuator name="wheel_front_left_actr">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
 
-  <transmission name="wheel_back_right_tran">
-    <type>transmission_interface/SimpleTransmission</type>
     <joint name="wheel_back_right_joint">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <command_interface name="velocity" />
+      <state_interface name="position" />
+      <state_interface name="velocity" />
     </joint>
-    <actuator name="wheel_back_right_actr">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
 
-  <transmission name="wheel_front_right_tran">
-    <type>transmission_interface/SimpleTransmission</type>
     <joint name="wheel_front_right_joint">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+      <command_interface name="velocity" />
+      <state_interface name="position" />
+      <state_interface name="velocity" />
     </joint>
-    <actuator name="wheel_front_right_actr">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-
-  <transmission name="suspension_right_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="suspension_right_joint">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="suspension_right_actr">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
-
-  <transmission name="suspension_left_tran">
-    <type>transmission_interface/SimpleTransmission</type>
-    <joint name="suspension_left_joint">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-    </joint>
-    <actuator name="suspension_left_actr">
-      <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
-      <mechanicalReduction>1</mechanicalReduction>
-    </actuator>
-  </transmission>
+  </ros2_control>
 
 </robot>

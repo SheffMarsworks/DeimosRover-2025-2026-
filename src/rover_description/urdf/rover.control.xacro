@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="Deimos/control" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot name="Deimos_Control" xmlns:xacro="http://ros.org/wiki/xacro">
 
   <xacro:property name="wheel_min_vel" value="-0.7" />
   <xacro:property name="wheel_max_vel" value="0.7" />
