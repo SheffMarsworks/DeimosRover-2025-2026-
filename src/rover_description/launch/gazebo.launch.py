@@ -107,8 +107,12 @@ def launch_setup(launch_context, *args, **kwargs):
         package="imu_filter_madgwick",
         executable="imu_filter_madgwick_node",
         output="screen",
-        parameters=[{"use_mag": False, "world_frame": "enu", "publish_tf": True}],
-    )
+        parameters=[{
+            "use_mag": False,
+            "world_frame": "enu",
+            "publish_tf": False
+            }],
+            )
 
     return [
         simu_time,

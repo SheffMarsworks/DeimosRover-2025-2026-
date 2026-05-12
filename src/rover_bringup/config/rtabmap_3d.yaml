@@ -1,6 +1,5 @@
 rtabmap:
   ros__parameters:
-
     use_sim_time: true
 
     frame_id: base_footprint
@@ -8,31 +7,58 @@ rtabmap:
     map_frame_id: map
 
     publish_tf: true
+    wait_for_transform: 1.0
 
     approx_sync: true
+    odom_sensor_sync: true
     topic_queue_size: 30
     sync_queue_size: 30
 
-    # LiDAR-only
+    map_always_update: true
+
     subscribe_scan_cloud: true
     subscribe_odom: true
     subscribe_rgb: false
     subscribe_depth: false
 
-    # Database
     database_path: /tmp/rtabmap_lidar.db
     delete_db_on_start: true
 
-    # 3D mapping
+    Rtabmap/DetectionRate: "1.0"
+
     Grid/3D: "true"
-    # 0 = laser scan | 1 = depth image(s) | 2 = both
     Grid/Sensor: "0"
-    Grid/RangeMax: "30.0"
-    Grid/RangeMin: "0.3"
+    Grid/RangeMax: "25.0"
+    Grid/RangeMin: "0.50"
     Grid/CellSize: "0.10"
 
+    Grid/NormalsSegmentation: "false"
+    Grid/FlatObstacleDetected: "true"
+    Grid/GroundIsObstacle: "false"
+    Grid/RayTracing: "true"
+    Grid/MinGroundHeight: "-0.20"
+    Grid/MaxGroundHeight: "0.15"
+    Grid/MaxObstacleHeight: "2.0"
+    Grid/MinClusterSize: "3"
+    Grid/ClusterRadius: "0.30"
+    Grid/NoiseFilteringRadius: "0.30"
+    Grid/NoiseFilteringMinNeighbors: "2"
+
+    GridGlobal/FullUpdate: "true"
+    GridGlobal/MinSize: "1.0"
+    GridGlobal/OccupancyThr: "0.55"
+
     Cloud/Assemble: "true"
-    Cloud/VoxelSize: "0.10"
+    Cloud/VoxelSize: "0.20"
     Cloud/DownsamplingStep: "1"
 
-
+    Reg/Strategy: "1"
+    Reg/Force3DoF: "true"
+    Icp/VoxelSize: "0.30"
+    Icp/PointToPlane: "false"
+    Icp/Iterations: "10"
+    Icp/Epsilon: "0.001"
+    Icp/MaxCorrespondenceDistance: "3.0"
+    Icp/RangeMin: "0.50"
+    Icp/RangeMax: "25.0"
+    Icp/MaxTranslation: "1.0"

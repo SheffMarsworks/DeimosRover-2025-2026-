@@ -37,6 +37,10 @@ rover_controller:
     min_angular_velocity: -1.0
     odom_topic: encoder
 
+    # LiDAR ICP odometry now publishes odom -> base_footprint.
+    # Keep wheel/controller odometry as a topic, but prevent duplicate TF.
+    enable_odom_tf: false
+
 # # Effort controllers for each wheel joint
 # Revolute_14_effort_controller:
 #   ros__parameters:

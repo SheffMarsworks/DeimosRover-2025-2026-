@@ -1,0 +1,32 @@
+icp_odometry:
+  ros__parameters:
+
+    use_sim_time: true
+
+    frame_id: base_footprint
+    odom_frame_id: odom
+    publish_tf: true
+    wait_for_transform: 0.5
+
+    queue_size: 1
+
+    Reg/Strategy: "1"
+    Reg/Force3DoF: "true"
+
+    Icp/VoxelSize: "0.30"
+    Icp/PointToPlane: "false"
+    Icp/Iterations: "10"
+    Icp/Epsilon: "0.001"
+    Icp/MaxCorrespondenceDistance: "3.0"
+    Icp/RangeMin: "0.50"
+    Icp/RangeMax: "25.0"
+    Icp/MaxTranslation: "1.0"
+
+    scan_voxel_size: 0.30
+    scan_cloud_max_points: 8000
+    scan_range_min: 0.50
+    scan_range_max: 25.0
+
+    OdomF2M/ScanSubtractRadius: "0.30"
+    OdomF2M/ScanMaxSize: "8000"
+    OdomF2M/BundleAdjustment: "false"
