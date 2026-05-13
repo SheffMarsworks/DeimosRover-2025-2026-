@@ -6,7 +6,6 @@
   <xacro:include filename="$(find rover_description)/urdf/rover.material.xacro" />
   <xacro:include filename="$(find rover_description)/urdf/rover.gazebo.xacro" />
   <xacro:include filename="$(find rover_description)/urdf/sensors/lidar3d.xacro" />
-  <xacro:include filename="$(find rover_description)/urdf/rover.trans.xacro" />
   <xacro:include filename="$(find rover_description)/urdf/rover.control.xacro" />
 
 
