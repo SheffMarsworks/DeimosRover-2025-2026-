@@ -7,7 +7,6 @@ from launch.substitutions import Command, LaunchConfiguration
 from launch_ros.actions import Node
 from launch_ros.substitutions import FindPackageShare
 from launch_ros.parameter_descriptions import ParameterValue
-from launch.substitutions import Command
 
 
 def launch_setup(launch_context, *args, **kwargs):
@@ -91,13 +90,13 @@ def launch_setup(launch_context, *args, **kwargs):
         executable="parameter_bridge",
         arguments=[
             "/clock@rosgraph_msgs/msg/Clock[gz.msgs.Clock",
-            "/imu/data_raw@sensor_msgs/msg/Imu[gz.msgs.IMU",
-            "/camera/image_raw@sensor_msgs/msg/Image@ignition.msgs.Image",
-            "/camera/camera_info@sensor_msgs/msg/CameraInfo@ignition.msgs.CameraInfo",
-            "/depth_camera/points@sensor_msgs/msg/PointCloud2@ignition.msgs.PointCloudPacked",
-            "/depth_camera/camera_info@sensor_msgs/msg/CameraInfo@ignition.msgs.CameraInfo",
-            "/depth_camera/image@sensor_msgs/msg/Image@ignition.msgs.Image",
-            "/depth_camera/depth_image@sensor_msgs/msg/Image@ignition.msgs.Image",
+            # "/imu/data_raw@sensor_msgs/msg/Imu[gz.msgs.IMU",
+            # "/camera/image_raw@sensor_msgs/msg/Image@ignition.msgs.Image",
+            # "/camera/camera_info@sensor_msgs/msg/CameraInfo@ignition.msgs.CameraInfo",
+            # "/depth_camera/points@sensor_msgs/msg/PointCloud2@ignition.msgs.PointCloudPacked",
+            # "/depth_camera/camera_info@sensor_msgs/msg/CameraInfo@ignition.msgs.CameraInfo",
+            # "/depth_camera/image@sensor_msgs/msg/Image@ignition.msgs.Image",
+            # "/depth_camera/depth_image@sensor_msgs/msg/Image@ignition.msgs.Image",
             "/lidar/points@sensor_msgs/msg/PointCloud2[gz.msgs.PointCloudPacked",
         ],
         remappings=[("/depth_camera/image", "/depth_camera/image_raw")],
