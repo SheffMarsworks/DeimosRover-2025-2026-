@@ -22,7 +22,9 @@ def launch_setup(launch_context, *args, **kwargs):
         "empty": "empty.sdf",
         "mars": "mars.world.sdf",
         "warehouse": "warehouse.sdf",
+        "warehouse2": "warehouse2.sdf",
         "industrial": "industrial_warehouse.sdf",
+        "cave": "cave.sdf",
     }
 
     # Throw error if invalid world name
