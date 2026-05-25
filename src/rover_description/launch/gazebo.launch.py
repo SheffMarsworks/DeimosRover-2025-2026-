@@ -103,27 +103,27 @@ def launch_setup(launch_context, *args, **kwargs):
         output="screen",
     )
 
-    # IMU filter
-    imu_filter = Node(
-        package="imu_filter_madgwick",
-        executable="imu_filter_madgwick_node",
-        output="screen",
-        parameters=[
-            {
-                "use_mag": False,
-                "world_frame": "enu",
-                "publish_tf": False,
-                "use_sim_time": True,
-            }
-        ],
-    )
+    # # IMU filter
+    # imu_filter = Node(
+    #     package="imu_filter_madgwick",
+    #     executable="imu_filter_madgwick_node",
+    #     output="screen",
+    #     parameters=[
+    #         {
+    #             "use_mag": False,
+    #             "world_frame": "enu",
+    #             "publish_tf": False,
+    #             "use_sim_time": True,
+    #         }
+    #     ],
+    # )
 
     return [
         gazebo,
         robot_state_publisher,
         spawn_robot,
         gz_ros2_bridge,
-        imu_filter,
+        # imu_filter,
     ]
 
 

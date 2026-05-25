@@ -29,6 +29,7 @@ Teleop (default is keyboard)
     ros2 launch rover_bringup simulation.launch.py world:=warehouse mode:=teleop teleop:=joystick
 Slam
     ros2 launch rover_bringup simulation.launch.py world:=warehouse mode:=slam
+    ros2 launch rover_bringup simulation.launch.py world:=warehouse2 mode:=slam Y:=1.5708 x:=3 y:=-23
     ros2 launch rover_bringup simulation.launch.py world:=industrial mode:=slam Y:=1.5708 x:=1.6 y:=-9
 
 (may need to run if transform node died)
