@@ -16,8 +16,13 @@
   </xacro:macro>
 
   <ros2_control name="GazeboSystem" type="system">
+    <xacro:property name="ros_distro" value="$(env ROS_DISTRO humble)" />
+    <xacro:property
+      name="ros2_control_system_plugin"
+      value="${'ign_ros2_control/IgnitionSystem' if ros_distro == 'humble' else 'gz_ros2_control/GazeboSimSystem'}" />
     <hardware>
-      <plugin>ign_ros2_control/IgnitionSystem</plugin>
+      <!-- <plugin>ign_ros2_control/IgnitionSystem</plugin> -->
+      <plugin>${ros2_control_system_plugin}</plugin>
     </hardware>
 
     <xacro:wheel_ros2_control_joint joint_name="wheel_back_left_joint" />
