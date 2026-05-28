@@ -76,7 +76,7 @@ def launch_setup(context, *args, **kwargs):
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
                     os.path.join(
-                        get_package_share_directory("rover_bringup"),
+                        get_package_share_directory("rover_slam"),
                         "launch",
                         "rtab.launch.py",
                     )

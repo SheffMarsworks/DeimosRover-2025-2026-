@@ -15,11 +15,11 @@ def generate_launch_description():
     points_topic = LaunchConfiguration("points_topic")
     odom_topic = LaunchConfiguration("odom_topic")
 
-    pkg_share = FindPackageShare("rover_bringup")
+    pkg_share = FindPackageShare("rover_slam")
     rtabmap_yaml = PathJoinSubstitution([
-    pkg_share,
-    "config",
-    "rtabmap_3d.yaml",
+        pkg_share,
+        "config",
+        "rtabmap_3d.yaml",
     ])
 
     icp_yaml = PathJoinSubstitution([
