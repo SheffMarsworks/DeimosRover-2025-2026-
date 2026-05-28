@@ -5,8 +5,6 @@ This ROS 2 workspace provides simulation, teleoperation, SLAM, and navigation su
 
 ## Main Components
 
-## Main Components
-
 - **Rover Description**  
   Rover URDF/Xacro model, meshes, sensors, Gazebo worlds, and RViz configurations.
 
