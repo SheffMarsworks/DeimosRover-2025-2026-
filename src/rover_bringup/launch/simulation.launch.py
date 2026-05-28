@@ -123,10 +123,10 @@ def generate_launch_description():
             ),
             DeclareLaunchArgument(
                 "world",
-                default_value="warehouse",
-                description="World shortcut: empty | mars | warehouse | industrial",
+                default_value="empty",
+                description="World shortcut: empty | mars | warehouse | warehouse2 | industrial | cave",
             ),
-            DeclareLaunchArgument("name", default_value="rover"),
+            DeclareLaunchArgument("name", default_value="Deimos"),
             DeclareLaunchArgument("x", default_value="0.0"),
             DeclareLaunchArgument("y", default_value="0.0"),
             DeclareLaunchArgument("z", default_value="0.25"),

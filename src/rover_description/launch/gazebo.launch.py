@@ -133,11 +133,11 @@ def generate_launch_description():
             DeclareLaunchArgument(
                 name="world",
                 default_value="empty",
-                description="World shortcut: empty | mars | warehouse | industrial",
+                description="World shortcut: empty | mars | warehouse | warehouse2 | industrial | cave",
             ),
             DeclareLaunchArgument(
                 name="name",
-                default_value="rover",
+                default_value="Deimos",
                 description="Entity name in Gazebo",
             ),
             DeclareLaunchArgument(

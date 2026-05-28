@@ -5,14 +5,19 @@ This ROS 2 workspace provides simulation, teleoperation, SLAM, and navigation su
 
 ## Main Components
 
+## Main Components
+
 - **Rover Description**  
-  rover URDF/Xacro model, meshes, sensors, Gazebo worlds, and RViz configurations.
+  Rover URDF/Xacro model, meshes, sensors, Gazebo worlds, and RViz configurations.
 
 - **Rover Controller**  
-  ros2_control configuration, differential-drive controller, keyboard teleop, and joystick teleop.
+  `ros2_control` configuration, differential-drive controller, keyboard teleop, and joystick teleop.
+
+- **Rover SLAM**  
+  RTAB-Map SLAM launch files and configuration, including ICP odometry and 3D LiDAR-based mapping.
 
 - **Rover Bringup**  
-  high-level launch files for simulation, teleoperation, SLAM, and navigation bringup.
+  High-level launch files that combine the description, controller, SLAM, teleoperation, RViz, and Gazebo simulation.
 
 ### Prerequisites
 

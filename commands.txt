@@ -42,13 +42,8 @@ Slam
     colcon clean workspace -y && colcon build --symlink-install && . install/setup.bash
 
 (issue)
-rover veered to the right when moving forward
-cant rotate
-xacro macro cant be used on the main urdf
-gazebo is opened using cmd, not ros node (not issue, just style)
+
 (to be done)
-test joystick teleop
-Add more worlds
 Nav
 (note)
 pointcloud_to_laserscan package convert 3D lidar point cloud to 2D laser scan for navigation
