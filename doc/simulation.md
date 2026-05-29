@@ -125,8 +125,8 @@ cave
 |---|---:|---|
 | `mode` | `none` | System mode: `none`, `teleop`, `slam`, `nav` |
 | `teleop` | `keyboard` | Teleoperation type: `keyboard` or `joystick` |
-| `world` | `warehouse` | Simulation world shortcut |
-| `name` | `rover` | Robot entity name in Ignition |
+| `world` | `empty` | Simulation world shortcut |
+| `name` | `Deimos` | Robot entity name in Ignition |
 | `x` | `0.0` | Initial robot X position |
 | `y` | `0.0` | Initial robot Y position |
 | `z` | `0.25` | Initial robot Z position |

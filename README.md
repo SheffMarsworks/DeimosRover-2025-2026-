@@ -1,4 +1,7 @@
 # Project Marsworks: Deimos Mars Rover
+
+[![ROS2 Humble - Build Workspace](https://github.com/SheffMarsworks/DeimosRover-2025-2026-/actions/workflows/build_ws.yml/badge.svg)](https://github.com/SheffMarsworks/DeimosRover-2025-2026-/actions/workflows/build_ws.yml)
+
 [![Static Badge](https://img.shields.io/badge/Ridwaan%20Joomun-orange?label=Software%20Lead&link=https%3A%2F%2Fgithub.com%2FRidwaan279)](https://github.com/Ridwaan279)
 
 This ROS 2 workspace provides simulation, teleoperation, SLAM, and navigation support for MarsWorks' Deimos rover. The project is developed for rover competitions including the [Anatolian Rover Challenge (ARC) 2026](https://www.anatolianrover.space/), [European Rover Challenge (ERC) 2026](https://roverchallenge.eu/) and the [UK Lunabotics 2026](https://uklunabotics.co.uk/).
@@ -41,7 +44,7 @@ source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
 
 # Install dependencies
 rosdep update
-rosdep install
+rosdep install --from-paths src --ignore-src -r -y --rosdistro humble
 
 # 3. Build the workspace
 

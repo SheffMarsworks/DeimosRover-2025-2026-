@@ -3,9 +3,9 @@
 <package format="3">
   <name>rover_slam</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="eurondelta@gmail.com">foe</maintainer>
-  <license>TODO: License declaration</license>
+  <description>SLAM packages for the rover</description>
+  <maintainer email="eurondelta@gmail.com">euro</maintainer>
+  <license>MIT</license>
 
   <depend>rclpy</depend>
   <depend>launch</depend>
