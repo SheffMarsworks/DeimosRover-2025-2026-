@@ -31,12 +31,11 @@ This ROS 2 workspace provides simulation, teleoperation, SLAM, and navigation su
 ## Installation
 
 ```bash
-# 1. Clone the repository:
-
+# Clone the repository:
 git clone https://github.com/SheffMarsworks/DeimosRover-2025-2026-.git
 cd DeimosRover-2025-2026-
 
-# 2. Source ROS 2
+# Source ROS
 source /opt/ros/humble/setup.bash
 source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
 
@@ -44,11 +43,10 @@ source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
 rosdep update
 rosdep install --from-paths src --ignore-src -r -y --rosdistro humble
 
-# 3. Build the workspace
-
+# Build the workspace
 colcon build --symlink-install
 
-# 4. Source the workspace
+# Source the workspace
 source install/setup.bash
 ```
 
