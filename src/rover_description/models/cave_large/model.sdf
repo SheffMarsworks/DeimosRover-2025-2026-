@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdf version="1.6">
+    <model name="cave">
+
+        <plugin
+            filename="gz-sim-physics-system"
+            name="gz::sim::systems::Physics">
+        </plugin>
+        <plugin
+            filename="gz-sim-user-commands-system"
+            name="gz::sim::systems::UserCommands">
+        </plugin>
+        <plugin
+            filename="gz-sim-scene-broadcaster-system"
+            name="gz::sim::systems::SceneBroadcaster">
+        </plugin>
+        <plugin
+            filename="gz-sim-sensors-system"
+            name="gz::sim::systems::Sensors">
+            <render_engine>ogre2</render_engine>
+        </plugin>
+
+        <static>true</static>
+        
+        <link name="Lights">
+            <light type="point" name="point_01">
+                <cast_shadows>true</cast_shadows>
+                <pose>0 -25 5 0 0 0</pose>
+                <diffuse>0.8 0.8 0.8 1</diffuse>
+                <specular>0.1 0.1 0.1 1</specular>
+                <intensity>1.5</intensity>
+                <attenuation>
+                    <range>6</range>
+                    <constant>0</constant>
+                    <linear>1</linear>
+                    <quadratic>0.001</quadratic>
+                </attenuation>
+                <visualize>false</visualize>
+            </light>
+            <light type="point" name="point_09">
+                <cast_shadows>true</cast_shadows>
+                <pose>0 -12.5 5 0 0 0</pose>
+                <diffuse>0.8 0.8 0.8 1</diffuse>
+                <specular>0.1 0.1 0.1 1</specular>
+                <intensity>1.5</intensity>
+                <attenuation>
+                    <range>6</range>
+                    <constant>0</constant>
+                    <linear>1</linear>
+                    <quadratic>0.001</quadratic>
+                </attenuation>
+                <visualize>false</visualize>
+
+            </light>
+            <light type="point" name="point_02">
+                <cast_shadows>true</cast_shadows>
+                <pose>0 0 5 0 0 0</pose>
+                <diffuse>0.8 0.8 0.8 1</diffuse>
+                <specular>0.1 0.1 0.1 1</specular>
+                <intensity>1.5</intensity>
+                <attenuation>
+                    <range>6</range>
+                    <constant>0</constant>
+                    <linear>1</linear>
+                    <quadratic>0.001</quadratic>
+                </attenuation>
+                <visualize>false</visualize>
+            </light>
+            <light type="point" name="point_03">
+                <cast_shadows>true</cast_shadows>
+                <pose>0 40 5 0 0 0</pose>
+                <diffuse>0.8 0.8 0.8 1</diffuse>
+                <specular>0.1 0.1 0.1 1</specular>
+                <intensity>1.5</intensity>
+                <attenuation>
+                    <range>4</range>
+                    <constant>0</constant>
+                    <linear>1</linear>
+                    <quadratic>0.001</quadratic>
+                </attenuation>
+                <visualize>false</visualize>
+
+            </light>
+            <light type="point" name="point_04">
+                <cast_shadows>true</cast_shadows>
+                <pose>45 45 5 0 0 0</pose>
+                <diffuse>0.8 0.8 0.8 1</diffuse>
+                <specular>0.1 0.1 0.1 1</specular>
+                <intensity>1.5</intensity>
+                <attenuation>
+                    <range>4</range>
+                    <constant>0</constant>
+                    <linear>1</linear>
+                    <quadratic>0.01</quadratic>
+                </attenuation>
+                <visualize>false</visualize>
+            </light>
+            <light type="point" name="point_06">
+                <cast_shadows>true</cast_shadows>
+                <pose>0 21 5 0 0 0</pose>
+                <diffuse>0.8 0.8 0.8 1</diffuse>
+                <specular>0.1 0.1 0.1 1</specular>
+                <intensity>1.5</intensity>
+                <attenuation>
+                    <range>4</range>
+                    <constant>0</constant>
+                    <linear>1</linear>
+                    <quadratic>0.01</quadratic>
+                </attenuation>
+                <visualize>false</visualize>
+            </light>
+            <light type="point" name="point_07">
+                <cast_shadows>true</cast_shadows>
+                <pose>20 50 5 0 0 0</pose>
+                <diffuse>0.8 0.8 0.8 1</diffuse>
+                <specular>0.1 0.1 0.1 1</specular>
+                <intensity>1.5</intensity>
+                <attenuation>
+                    <range>4</range>
+                    <constant>0</constant>
+                    <linear>1</linear>
+                    <quadratic>0.01</quadratic>
+                </attenuation>
+                <visualize>false</visualize>
+            </light>
+            <light type="point" name="point_08">
+                <cast_shadows>true</cast_shadows>
+                <pose>52.5 60 5 0 0 0</pose>
+                <diffuse>0.8 0.8 0.8 1</diffuse>
+                <specular>0.1 0.1 0.1 1</specular>
+                <intensity>1.5</intensity>
+                <attenuation>
+                    <range>4</range>
+                    <constant>0</constant>
+                    <linear>1</linear>
+                    <quadratic>0.01</quadratic>
+                </attenuation>
+                <visualize>false</visualize>
+            </light>
+
+            <light type="point" name="path_light_11">
+                <cast_shadows>true</cast_shadows>
+                <pose>0 -25 6 0 0 0</pose>
+                <diffuse>0.9 0.8 0.6 1</diffuse>
+                <specular>0.2 0.2 0.2 1</specular>
+                <intensity>2.5</intensity>
+                <attenuation>
+                    <range>25</range>
+                    <constant>0.3</constant>
+                    <linear>0.02</linear>
+                    <quadratic>0.001</quadratic>
+                </attenuation>
+                <visualize>false</visualize>
+            </light>
+
+            <light type="point" name="path_light_12">
+                <cast_shadows>true</cast_shadows>
+                <pose>0 -10 6 0 0 0</pose>
+                <diffuse>0.9 0.8 0.6 1</diffuse>
+                <specular>0.2 0.2 0.2 1</specular>
+                <intensity>2.5</intensity>
+                <attenuation>
+                    <range>25</range>
+                    <constant>0.3</constant>
+                    <linear>0.02</linear>
+                    <quadratic>0.001</quadratic>
+                </attenuation>
+                <visualize>false</visualize>
+            </light>
+
+            <light type="point" name="path_light_13">
+                <cast_shadows>true</cast_shadows>
+                <pose>0 10 6 0 0 0</pose>
+                <diffuse>0.9 0.8 0.6 1</diffuse>
+                <specular>0.2 0.2 0.2 1</specular>
+                <intensity>2.5</intensity>
+                <attenuation>
+                    <range>25</range>
+                    <constant>0.3</constant>
+                    <linear>0.02</linear>
+                    <quadratic>0.001</quadratic>
+                </attenuation>
+                <visualize>false</visualize>
+            </light>
+
+            <light type="point" name="path_light_14">
+                <cast_shadows>true</cast_shadows>
+                <pose>0 30 6 0 0 0</pose>
+                <diffuse>0.9 0.8 0.6 1</diffuse>
+                <specular>0.2 0.2 0.2 1</specular>
+                <intensity>2.5</intensity>
+                <attenuation>
+                    <range>25</range>
+                    <constant>0.3</constant>
+                    <linear>0.02</linear>
+                    <quadratic>0.001</quadratic>
+                </attenuation>
+                <visualize>false</visualize>
+            </light>
+
+            <light type="point" name="path_light_15">
+                <cast_shadows>true</cast_shadows>
+                <pose>15 42 6 0 0 0</pose>
+                <diffuse>0.9 0.8 0.6 1</diffuse>
+                <specular>0.2 0.2 0.2 1</specular>
+                <intensity>2.5</intensity>
+                <attenuation>
+                    <range>25</range>
+                    <constant>0.3</constant>
+                    <linear>0.02</linear>
+                    <quadratic>0.001</quadratic>
+                </attenuation>
+                <visualize>false</visualize>
+            </light>
+
+            <light type="point" name="path_light_16">
+                <cast_shadows>true</cast_shadows>
+                <pose>32 45 6 0 0 0</pose>
+                <diffuse>0.9 0.8 0.6 1</diffuse>
+                <specular>0.2 0.2 0.2 1</specular>
+                <intensity>2.5</intensity>
+                <attenuation>
+                    <range>25</range>
+                    <constant>0.3</constant>
+                    <linear>0.02</linear>
+                    <quadratic>0.001</quadratic>
+                </attenuation>
+                <visualize>false</visualize>
+
+            </light>
+
+            <light type="point" name="path_light_17">
+                <cast_shadows>true</cast_shadows>
+                <pose>48 55 6 0 0 0</pose>
+                <diffuse>0.9 0.8 0.6 1</diffuse>
+                <specular>0.2 0.2 0.2 1</specular>
+                <intensity>2.5</intensity>
+                <attenuation>
+                    <range>25</range>
+                    <constant>0.3</constant>
+                    <linear>0.02</linear>
+                    <quadratic>0.001</quadratic>
+                </attenuation>
+                <visualize>false</visualize>
+            </light>
+
+        </link>
+        <link name="base_link">
+            <collision name="collision">
+                <pose>0 0 0 0 0 0</pose>
+                <geometry>
+                    <mesh>
+                        <uri>model://cave_large/meshes/cave.dae</uri>
+                        <scale>5.0 5.0 5.0</scale>
+                    </mesh>
+                </geometry>
+            </collision>
+            <visual name="CaveWall_visual">
+                <geometry>
+                    <mesh>
+                        <uri>model://cave_large/meshes/cave.dae</uri>
+                        <scale>5.0 5.0 5.0</scale>
+                        <submesh>
+                            <name>CaveWall</name>
+                            <center>false</center>
+                        </submesh>
+                    </mesh>
+                </geometry>
+                <material>
+                    <diffuse>1.0 1.0 1.0</diffuse>
+                    <specular>1.0 1.0 1.0</specular>
+                    <pbr>
+                        <metal>
+                            <albedo_map>model://cave_large/materials/textures/CaveWall_Albedo.png</albedo_map>
+                            <normal_map>model://cave_large/materials/textures/CaveWall_Normal.png</normal_map>
+                        </metal>
+                    </pbr>
+                </material>
+            </visual>
+            <visual name="Stalagmite_visual">
+                <geometry>
+                    <mesh>
+                        <uri>model://cave_large/meshes/cave.dae</uri>
+                        <scale>5.0 5.0 5.0</scale>
+                        <submesh>
+                            <name>Stalagmite</name>
+                            <center>false</center>
+                        </submesh>
+                    </mesh>
+                </geometry>
+                <material>
+                    <diffuse>1.0 1.0 1.0</diffuse>
+                    <specular>1.0 1.0 1.0</specular>
+                    <pbr>
+                        <metal>
+                            <albedo_map>model://cave_large/materials/textures/Stalagmite_Albedo.png</albedo_map>
+                            <normal_map>model://cave_large/materials/textures/Stalagmite_Normal.png</normal_map>
+                        </metal>
+                    </pbr>
+                </material>
+            </visual>
+            <visual name="Tower_visual">
+                <geometry>
+                    <mesh>
+                        <uri>model://cave_large/meshes/cave.dae</uri>
+                        <scale>5.0 5.0 5.0</scale>
+                        <submesh>
+                            <name>Tower</name>
+                            <center>false</center>
+                        </submesh>
+                    </mesh>
+                </geometry>
+                <material>
+                    <diffuse>1.0 1.0 1.0</diffuse>
+                    <specular>1.0 1.0 1.0</specular>
+                    <pbr>
+                        <metal>
+                            <albedo_map>model://cave_large/materials/textures/Tower_Albedo.png</albedo_map>
+                            <normal_map>model://cave_large/materials/textures/Tower_Normal.png</normal_map>
+                        </metal>
+                    </pbr>
+                </material>
+            </visual>
+            <visual name="Rocks_visual">
+                <geometry>
+                    <mesh>
+                        <uri>model://cave_large/meshes/cave.dae</uri>
+                        <scale>5.0 5.0 5.0</scale>
+                        <submesh>
+                            <name>Rocks</name>
+                            <center>false</center>
+                        </submesh>
+                    </mesh>
+                </geometry>
+                <material>
+                    <diffuse>1.0 1.0 1.0</diffuse>
+                    <specular>1.0 1.0 1.0</specular>
+                    <pbr>
+                        <metal>
+                            <albedo_map>model://cave_large/materials/textures/Rocks_Albedo.png</albedo_map>
+                            <normal_map>model://cave_large/materials/textures/Rocks_Normal.png</normal_map>
+                        </metal>
+                    </pbr>
+                </material>
+            </visual>
+            <visual name="RockPile_visual">
+                <geometry>
+                    <mesh>
+                        <uri>model://cave_large/meshes/cave.dae</uri>
+                        <scale>5.0 5.0 5.0</scale>
+                        <submesh>
+                            <name>RockPile</name>
+                            <center>false</center>
+                        </submesh>
+                    </mesh>
+                </geometry>
+                <material>
+                    <diffuse>1.0 1.0 1.0</diffuse>
+                    <specular>1.0 1.0 1.0</specular>
+                    <pbr>
+                        <metal>
+                            <albedo_map>model://cave_large/materials/textures/RockPile_Albedo.png</albedo_map>
+                            <normal_map>model://cave_large/materials/textures/RockPile_Normal.png</normal_map>
+                        </metal>
+                    </pbr>
+                </material>
+            </visual>
+        </link>
+    </model>
+</sdf>

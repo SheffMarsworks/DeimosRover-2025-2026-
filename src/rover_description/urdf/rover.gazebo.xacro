@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<robot name="Deimos_Gazebo" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:property name="default_mu1" value="0.2" />
+  <xacro:property name="default_mu2" value="0.2" />
+
+  <xacro:macro name="gazebo_surface" params="link_name">
+    <gazebo reference="${link_name}">
+      <mu1>${default_mu1}</mu1>
+      <mu2>${default_mu2}</mu2>
+      <selfCollide>true</selfCollide>
+    </gazebo>
+  </xacro:macro>
+
+  <!-- ros2_control plugin -->
+  <gazebo>
+    <plugin filename="ign_ros2_control-system"
+      name="ign_ros2_control::IgnitionROS2ControlPlugin">
+      <parameters>$(find rover_controller)/config/controller.yaml</parameters>
+    </plugin>
+  </gazebo>
+
+  <!-- Base -->
+  <xacro:gazebo_surface link_name="base_link" />
+
+  <!-- Wheels -->
+  <xacro:gazebo_surface link_name="wheel_back_left" />
+  <xacro:gazebo_surface link_name="wheel_front_left" />
+  <xacro:gazebo_surface link_name="wheel_back_right" />
+  <xacro:gazebo_surface link_name="wheel_front_right" />
+
+  <!-- Suspensions -->
+  <xacro:gazebo_surface link_name="suspension_right" />
+  <xacro:gazebo_surface link_name="suspension_left" />
+
+</robot>

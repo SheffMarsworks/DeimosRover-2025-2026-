@@ -9,6 +9,12 @@ from launch.substitutions import LaunchConfiguration
 def launch_setup(context, *args, **kwargs):
     mode = LaunchConfiguration("mode").perform(context)
     teleop = LaunchConfiguration("teleop").perform(context)
+    world = LaunchConfiguration("world").perform(context)
+    name = LaunchConfiguration("name").perform(context)
+    x = LaunchConfiguration("x").perform(context)
+    y = LaunchConfiguration("y").perform(context)
+    z = LaunchConfiguration("z").perform(context)
+    Y = LaunchConfiguration("Y").perform(context)
 
     actions = []
 
@@ -21,7 +27,15 @@ def launch_setup(context, *args, **kwargs):
                     "launch",
                     "gazebo.launch.py",
                 )
-            )
+            ),
+            launch_arguments={
+                "world": world,
+                "name": name,
+                "x": x,
+                "y": y,
+                "z": z,
+                "Y": Y,
+            }.items(),
         )
     )
 
@@ -49,7 +63,10 @@ def launch_setup(context, *args, **kwargs):
                     "rviz.launch.py",
                 )
             ),
-            launch_arguments={"use_sim_time": "true"}.items(),
+            launch_arguments={
+                "use_sim_time": "true",
+                "mode": mode,
+                }.items(),
         )
     )
 
@@ -59,7 +76,7 @@ def launch_setup(context, *args, **kwargs):
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
                     os.path.join(
-                        get_package_share_directory("rover_bringup"),
+                        get_package_share_directory("rover_slam"),
                         "launch",
                         "rtab.launch.py",
                     )
@@ -104,6 +121,16 @@ def generate_launch_description():
                 default_value="none",
                 description="Mode: none | teleop | slam | nav",
             ),
+            DeclareLaunchArgument(
+                "world",
+                default_value="empty",
+                description="World shortcut: empty | mars | warehouse | warehouse2 | industrial | cave",
+            ),
+            DeclareLaunchArgument("name", default_value="Deimos"),
+            DeclareLaunchArgument("x", default_value="0.0"),
+            DeclareLaunchArgument("y", default_value="0.0"),
+            DeclareLaunchArgument("z", default_value="0.25"),
+            DeclareLaunchArgument("Y", default_value="0.0"),
             OpaqueFunction(function=launch_setup),
         ]
     )

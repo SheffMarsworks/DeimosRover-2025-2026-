@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<robot name="Deimos_Control" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:property name="wheel_min_vel" value="-0.7" />
+  <xacro:property name="wheel_max_vel" value="0.7" />
+
+  <xacro:macro name="wheel_ros2_control_joint" params="joint_name">
+    <joint name="${joint_name}">
+      <command_interface name="velocity">
+        <param name="min">${wheel_min_vel}</param>
+        <param name="max">${wheel_max_vel}</param>
+      </command_interface>
+      <state_interface name="position" />
+      <state_interface name="velocity" />
+    </joint>
+  </xacro:macro>
+
+  <ros2_control name="GazeboSystem" type="system">
+    <xacro:property name="ros_distro" value="$(optenv ROS_DISTRO humble)" />
+    <xacro:property
+      name="ros2_control_system_plugin"
+      value="${'ign_ros2_control/IgnitionSystem' if ros_distro == 'humble' else 'gz_ros2_control/GazeboSimSystem'}" />
+
+    <hardware>
+      <plugin>${ros2_control_system_plugin}</plugin>
+    </hardware>
+
+    <xacro:wheel_ros2_control_joint joint_name="wheel_back_left_joint" />
+    <xacro:wheel_ros2_control_joint joint_name="wheel_front_left_joint" />
+    <xacro:wheel_ros2_control_joint joint_name="wheel_back_right_joint" />
+    <xacro:wheel_ros2_control_joint joint_name="wheel_front_right_joint" />
+
+  </ros2_control>
+</robot>

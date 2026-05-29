@@ -20,10 +20,11 @@ jobs:
       - name: Install dependencies
         run: |
           apt-get update
-          apt-get install python3-pip -y
+          apt-get install python3-pip python3-colcon-common-extensions -y
+          . /opt/ros/humble/setup.sh
           rosdep update
           cd $GITHUB_WORKSPACE
-          rosdep install --from-paths . --ignore-src --rosdistro humble -y
+          rosdep install --from-paths src --ignore-src --rosdistro humble -r -y
 
       - name: Build packages
         run: |
