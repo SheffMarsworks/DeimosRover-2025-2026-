@@ -38,4 +38,10 @@ def generate_launch_description():
             arguments=["joint_trajectory_controller", "--inactive"],
             output="screen",
         ),
+        '''Node(
+            package="controller_manager",
+            executable="spawner",
+            arguments=["diff_drive_controller"],
+            output="screen",
+        ),'''
     ])
