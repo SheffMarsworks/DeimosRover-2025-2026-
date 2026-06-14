@@ -100,7 +100,7 @@ def launch_setup(context, *args, **kwargs):
         )
 
     # Teleop in teleop OR slam
-    if mode in ["teleop", "slam"]:
+    if mode in ["teleop", "slam", "nav"]:
         teleop_map = {
             "keyboard": "keyboard_teleop.launch.py",
             "joystick": "joystick_teleop.launch.py",
