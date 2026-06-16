@@ -26,23 +26,6 @@ def launch_setup(context, *args, **kwargs):
         )
     )
 
-    # RViz
-    actions.append(
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource(
-                os.path.join(
-                    get_package_share_directory("rover_description"),
-                    "launch",
-                    "rviz.launch.py",
-                )
-            ),
-            launch_arguments={
-                "use_sim_time": "false",
-                "mode": mode,
-                }.items(),
-        )
-    )
-
     # SLAM in slam OR nav (nav needs RTAB-Map for map and map->odom TF)
     if mode in ["slam", "nav"]:
         actions.append(
