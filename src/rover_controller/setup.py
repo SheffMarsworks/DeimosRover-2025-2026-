@@ -28,6 +28,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            "cmd_vel_to_wheels = rover_controller.cmd_vel_to_wheels:main",
         ],
     },
 )

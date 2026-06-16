@@ -17,6 +17,12 @@ def generate_launch_description():
         output="screen",
     )
 
+    cmd_vel_to_wheels = Node(
+        package="rover_controller",
+        executable="cmd_vel_to_wheels",
+        name="cmd_vel_to_wheels",
+        output="screen",
+    )
 
     # Controller spawner
     controller = Node(
@@ -35,5 +41,6 @@ def generate_launch_description():
         [
             joint_state_broadcaster,
             controller,
+            cmd_vel_to_wheels,
         ]
     )
