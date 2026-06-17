@@ -28,12 +28,12 @@ class KeyboardSerialNode(Node):
         
         # Key to command mapping
         self.key_commands = {
-            '1': '1',
-            '2': '2',
-            '3': '3',
-            '4': '4',
-            '5': '5',
-            '6': '6',
+            '1': '14',
+            '2': '15',
+            '3': '16',
+            '4': '17',
+            '5': '18',
+            '6': '19',
 
         }
         
