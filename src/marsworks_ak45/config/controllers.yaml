@@ -7,8 +7,6 @@ controller_manager:
       type: joint_trajectory_controller/JointTrajectoryController
     velocity_controller:
       type: velocity_controllers/JointGroupVelocityController
-    diff_drive_controller:
-      type: diff_drive_controller/DiffDriveController  
 
 joint_trajectory_controller:
   ros__parameters:
